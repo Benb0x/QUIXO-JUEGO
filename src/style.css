@@ -1,0 +1,44 @@
+body {
+    background-color: #DCDADA;
+    font-family: "Noto Sans", Arial, sans-serif;
+    margin: 0;
+    padding-top: 20px; /* Ajustar según sea necesario para el espacio sobre el logo */
+    text-align: center; /* Esto centra horizontalmente todos los elementos en línea o en línea-bloque */
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* Alinea los elementos secundarios en una columna vertical */
+    justify-content: flex-start; /* Alinea los elementos al inicio del contenedor flex */
+}
+.logo-container {
+    text-align: center; /* Centra el logo horizontalmente */
+}
+
+h1 {
+    text-align: center;
+    color: black;
+    font-size: 40px;
+}
+#circulo {
+    background: #625F5F;
+    border-radius: 50%;
+    width: 900px;
+    height: 900px;
+    margin: 20px auto 0; /* Esto añade un margen superior al círculo y lo centra horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contenedor{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    
+}
+#quixoLineas {
+    /* Ajustar si es necesario para centrar el SVG dentro del círculo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* No es necesario establecer un ancho y alto específico si el SVG se escala correctamente con su viewBox */
+}

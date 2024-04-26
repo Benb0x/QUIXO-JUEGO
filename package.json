@@ -1,0 +1,45 @@
+{
+  "name": "quixo",
+  "version": "1.0.0",
+  "description": "\"Quixo's Simon Dice es un juego interactivo que desafía la memoria y la habilidad de seguir secuencias de colores, apto para todas las edades y perfecto para entrenar la agilidad mental.\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve src/ -s && echo 'Servidor iniciado en http://localhost:3000'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benb0x/QUIXO-JUEGO.git"
+  },
+  "keywords": [
+    "[\"simon-dice\"",
+    "\"quixo\"",
+    "\"juego\"",
+    "\"memoria\"",
+    "\"interactivo\"",
+    "\"secuencia",
+    "de",
+    "colores\"",
+    "\"juego",
+    "de",
+    "habilidad\"",
+    "\"entrenamiento",
+    "cerebral\"",
+    "\"juego",
+    "educativo\"",
+    "\"juego",
+    "para",
+    "todas",
+    "las",
+    "edades\"]"
+  ],
+  "author": "Bárbara Trejo Gómez",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Benb0x/QUIXO-JUEGO/issues"
+  },
+  "homepage": "https://github.com/Benb0x/QUIXO-JUEGO#readme",
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}
