@@ -1,6 +1,44 @@
-#path-1 {
-    fill: blue; /* Esto cambiará el color del path en tu SVG */
+#caraInferiorI,#caraInferiorD,#caraCentro{
+    fill:#E7E1E1;
+}
+#cascoS{
+    fill:#70FF00;
+}
+#cascoI{
+    fill:#0000FF;
+}
+#ojos{
+    fill:#02CB02;
 }
 #bigote{
-    fill:palevioletred
+    fill:#FF0000;
 }
+/*
+#caraInferiorI,
+#caraInferiorD,
+#caraCentro {
+    fill: #E7E1E1;
+    filter: brightness(1.5); 
+}
+
+#cascoS {
+    fill: #70FF00;
+    filter: brightness(1.5);
+}
+
+#cascoI {
+    fill: #0000FF;
+    filter: brightness(1.5);
+}
+
+#ojos {
+    fill: #02CB02;
+    filter: url(#glow-effect);
+}
+
+#bigote {
+    fill: #FF0000;
+    filter: brightness(1.5);
+}
+*/
+
