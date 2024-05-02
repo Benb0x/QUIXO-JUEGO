@@ -2,18 +2,19 @@ body {
     background-color: #DCDADA;
     font-family: "Noto Sans", Arial, sans-serif;
     margin: 0;
-    padding-top: 20px; /* Ajustar según sea necesario para el espacio sobre el logo */
+    padding-top: 50px; /* Aumenta el espacio en la parte superior si es necesario */
     text-align: center; /* Esto centra horizontalmente todos los elementos en línea o en línea-bloque */
     height: 100vh;
     display: flex;
     flex-direction: column; /* Alinea los elementos secundarios en una columna vertical */
-    justify-content: flex-start; /* Alinea los elementos al inicio del contenedor flex */
+    justify-content: flex-start;  /* Alinea los elementos al inicio del contenedor flex */
 }
 .logo-container {
-    text-align: center; /* Centra el contenido horizontalmente */
-    margin: 0 auto; 
+    margin-bottom: 30px;
 }
-
+#juego {
+    text-align: center;
+}
 h1 {
     text-align: center;
     color: black;
@@ -24,7 +25,7 @@ h1 {
     border-radius: 50%;
     width: 900px;
     height: 900px;
-    margin: 20px auto 0; /* Esto añade un margen superior al círculo y lo centra horizontalmente */
+    margin: auto; /* Centra el círculo horizontalmente y agrega margen superior */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,16 +44,28 @@ h1 {
     align-items: center;
     /* No es necesario establecer un ancho y alto específico si el SVG se escala correctamente con su viewBox */
 }
-.empezar{
-    position: absolute;
-    width: 75px;
-    top: 10px;
-    right: 10px;
+
+#botonEmpezar {
+    background-color: #FFFFFF; /* Color blanco para el botón después de empezar */
+    color: #4CAF50; /* Color del texto verde, igual al botón original */
     border: none;
-    font-family: 'Merriweather', serif;
-    cursor: pointer;
     border-radius: 5px;
-    color: #fff;
-    background-color: #587792;
-    padding: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative; /* Cambia a 'relative' para que siga el flujo normal del documento */
+    margin: 0 auto 10px; /* Centra horizontalmente y añade margen inferior */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: inline-block; /* Hace que el botón se comporte como un elemento en línea con bloque */
+}
+
+#estadoJuego, #ronda {
+    color: #333;
+    font-size: 18px;
+    margin: 10px auto 0; /* Centra estos elementos y añade espacio superior */
+    display: block; /* Asegura que cada uno esté en su propia línea */
+}
+
+#estadoJuego {
+    margin-bottom: 5px; /* Espacio entre 'Estado del juego' y 'Ronda' */
 }

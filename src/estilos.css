@@ -1,19 +1,56 @@
-#caraInferiorI,#caraInferiorD,#caraCentro{
-    fill:#E7E1E1;
+/* Estado normal de los botones (más oscuros) */
+#botonCascoS {
+    fill: #60A729; /* Verde apagado */
 }
-#cascoS{
-    fill:#70FF00;
+#botonCascoI {
+    fill: #3838B7; /* Azul apagado */
 }
-#cascoI{
-    fill:#0000FF;
+#botonOjos {
+    fill: #40AD40; /* Verde oscuro apagado */
 }
-#ojos{
-    fill:#02CB02;
+#botonBigote {
+    fill: #D12C2C; /* Rojo apagado */
 }
-#bigote{
-    fill:#FF0000;
+
+/* Estado iluminado de los botones (más vivos) */
+.boton-activo #botonCascoS {
+    fill: #70FF00; /* Verde brillante */
 }
-/*
+.boton-activo #botonCascoI {
+    fill: #0000FF; /* Azul brillante */
+}
+.boton-activo #botonOjos {
+    fill: #02CB02; /* Verde claro brillante */
+}
+.boton-activo #botonBigote {
+    fill: #FF0000; /* Rojo brillante */
+}
+/*#cascoS {
+    fill: #70FF00;
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+#cascoI {
+    fill: #0000FF;
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+#ojos {
+    fill: #02CB02;
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+#bigote {
+    fill: #FF0000;
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+
+#cascoS:active, #cascoI:active, #ojos:active, #bigote:active,
+.active { /* Clase .active para mostrar la interacción */
+ /*   filter: brightness(125%);
+}
+
 #caraInferiorI,
 #caraInferiorD,
 #caraCentro {
@@ -40,5 +77,5 @@
     fill: #FF0000;
     filter: brightness(1.5);
 }
-*/
 
+*/

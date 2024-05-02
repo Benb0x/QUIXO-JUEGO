@@ -1,34 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="es">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="estilos.css">
-    <script src="index.js"></script>
-    <title>Quixo</title>
-  </head>
-  <body>
-    <div id="simonDIce">
+    <link rel="stylesheet" href="estilos.css">   
+    <title>Quixo Dice</title>
+</head>
+<body>
     <div class="logo-container">
-      <img
-        src="//img1.wsimg.com/isteam/ip/96ac62c5-7749-4eaa-b32c-e83af1e0003f/logo3.png/:/rs=h:120,cg:true,m/qt=q:95"
-        srcset="
-          //img1.wsimg.com/isteam/ip/96ac62c5-7749-4eaa-b32c-e83af1e0003f/logo3.png/:/rs=w:222,h:120,cg:true,m/cr=w:222,h:120/qt=q:95,
-          //img1.wsimg.com/isteam/ip/96ac62c5-7749-4eaa-b32c-e83af1e0003f/logo3.png/:/rs=w:445,h:240,cg:true,m/cr=w:445,h:240/qt=q:95 2x,
-          //img1.wsimg.com/isteam/ip/96ac62c5-7749-4eaa-b32c-e83af1e0003f/logo3.png/:/rs=w:667,h:360,cg:true,m/cr=w:667,h:360/qt=q:95 3x
-        "
-        alt="Quixo"
-        data-ux="ImageLogo"
-        data-aid="HEADER_LOGO_IMAGE_RENDERED"
-        id="n-124401"
-        class="logo-image"
-      />
+        <img src="//img1.wsimg.com/isteam/ip/96ac62c5-7749-4eaa-b32c-e83af1e0003f/logo3.png/:/rs=h:120,cg:true,m/qt=q:95"
+            alt="Logo de Simon Dice" id="logoJuego" class="logo-image"/>
     </div>
-    <button id="empezar">Empecemos</button>
+    <button id="botonEmpezar">Empecemos</button>
+    <div id="estadoJuego">Estado del juego aquí</div>
+    <div id="ronda">Ronda: 0</div>
     <div class="contenedorJuego">
-    <div id="circulo">
-       <div id="quixoLineas">
+        <div id="circulo" class="circuloInteractivo">
         <svg name="lineas"width="220" height="746" viewBox="0 0 220 746" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path id="caraInferiorI" d="M105.129 500.148L104.998 515.539L104.218 530.931L102.909 546.322L100.954 561.584L98.4755 576.704L96.9141 586.628L95.6088 596.666L94.4301 606.708L93.7821 616.751L93.9115 626.796L94.8248 636.835L95.5541 641.835L96.7835 650.539L94.9568 642.442L92.8688 634.362L90.5235 626.404L87.7781 618.45L84.9088 610.883L81.5221 603.316L77.9995 596.147L74.0861 588.97L74.5141 588.178L76.0421 584.928L77.7381 580.234L79.4328 574.104L80.4755 567.712L81.0008 561.322L81.1341 554.924L81.2595 548.536L81.6528 542.142L82.1701 535.762L82.9515 530.147L84.2595 524.675L85.9515 519.32L88.4368 514.364L90.3928 511.11L92.7381 508.104L95.2141 505.368L98.2128 503.15L101.607 501.454L105.129 500.148Z"  stroke="#231F20" stroke-width="1.33333" stroke-miterlimit="10"/>
             <path id="caraInferiorD" d="M115.696 500.148L119.217 501.454L122.604 503.15L125.474 505.368L128.082 508.104L130.43 511.11L132.382 514.364L134.862 519.32L136.56 524.675L137.736 530.147L138.646 535.762L139.298 543.19L139.56 550.623L139.692 558.187L140.086 565.624L141.124 573.058L143.081 580.234L144.774 584.928L146.296 588.146L146.732 588.97L142.692 596.274L139.042 603.842L135.648 611.412L132.777 619.228L130.17 626.932L127.824 634.75L125.738 642.576L123.91 650.539L125.336 641.338L125.868 637.623L126.78 627.572L127.042 617.538L126.52 607.491L124.95 594.059L122.865 580.751L120.78 567.322L118.826 554.018L117.257 540.576L116.345 527.144L115.828 513.714L115.696 500.148Z"  stroke="#231F20" stroke-width="1.33333" stroke-miterlimit="10"/>
@@ -43,15 +31,16 @@
             </g> 
             <path id="cascoS" d="M104.819 1L104.691 14.7787L104.426 28.5573L103.891 42.34L102.703 56.1173L101.111 70.0293L98.8621 83.812L96.2155 97.592L92.9008 111.239L90.1128 120.639L87.0688 129.787L83.4901 138.927L79.3821 147.939L74.7448 156.82L70.8075 163.561L69.7115 165.424L70.3781 169.011L70.6355 172.453L70.9048 175.231V177.221L70.7728 180.268V183.715V187.424L70.9048 194.181L71.3008 200.539L72.2355 206.633L74.0901 212.729L75.8088 216.967L78.0595 220.947L80.8381 224.389L84.2861 227.436L88.1288 229.816L92.2368 231.677L96.6128 232.868L101.111 233.393L105.614 233.528L110.121 233.663L111.379 233.628L114.623 233.528L119.263 233.393L123.639 232.868L128.013 231.677L132.25 229.816L136.093 227.436L139.542 224.389L142.322 220.947L144.574 216.967L146.294 212.729L148.153 206.373L149.075 199.875L149.471 193.117L149.606 189.808V186.493V183.317V180.532L149.471 177.881V174.964L149.873 170.596L150.67 165.424L149.614 163.603L145.235 156.02L140.331 146.483L135.951 136.544L132.119 126.472L127.743 112.293L124.17 97.7213L121.251 83.1493L119.263 69.6347L117.67 55.9893L116.486 42.4693L115.825 28.692L115.555 14.7787V1H104.819Z"  stroke="#231F20" stroke-width="1.33333" stroke-miterlimit="10"/>
             <g id="grupoInteractivo">
-              <use xlink:href="#ojos"/>
-              <use xlink:href="#bigote"/>
-              <use xlink:href="#cascoS"/>
-              <use xlink:href="#cascoI"/>
+              <use xlink:href="#ojos"  id="botonOjos"/>
+              <use xlink:href="#bigote" id="botonBigote"/>
+              <use xlink:href="#cascoS" id="botonCascoS"/>
+              <use xlink:href="#cascoI" id="botonCascoI"/>
           </g>
          </svg>
         </div>
-        <div id="ronda">Ronda </div>
     </div>
   </div>
+  </div>
+  <script src="index.js"></script>
   </body>
 </html>
