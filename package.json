@@ -41,5 +41,8 @@
   "homepage": "https://github.com/Benb0x/QUIXO-JUEGO#readme",
   "devDependencies": {
     "serve": "^14.2.3"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }

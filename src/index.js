@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.display.botonEmpezar.disabled = false; // Habilita el botón cuando todos los sonidos estén cargados
             }).catch(error => console.error("Error al cargar sonidos:", error));
         }
-    
+
         async cargarSonidos() {
             const sonidos = [
-                'src/sounds/sounds_1 (1).mp3',
-                'src/sounds/sounds_2 (1).mp3',
-                'src/sounds/sounds_3 (1).mp3',
-                'src/sounds/sounds_4 (1).mp3'
+                'sounds/sounds_1 (1).mp3',
+                'sounds/sounds_2 (1).mp3',
+                'sounds/sounds_3 (1).mp3',
+                'sounds/sounds_4 (1).mp3'
             ];
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
@@ -45,18 +45,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             await Promise.all(promesas);
         }
-    
+
         iniciar() {
             this.display.botonEmpezar.onclick = () => this.iniciarJuego();
             this.botones.forEach(boton => {
-                boton.addEventListener('click', () => {
+                // Establecer el color inactivo inicial al cargar la página
+                boton.style.fill = boton.getAttribute('data-color-inactivo');
+        
+                boton.addEventListener('click', (event) => {
                     if (!this.botonesBloqueados) {
-                        const indice = this.botones.indexOf(boton);
+                        const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
                     }
                 });
             });
         }
+        
 
         iniciarJuego() {
             this.display.botonEmpezar.disabled = true;
@@ -75,27 +79,20 @@ document.addEventListener('DOMContentLoaded', function() {
             return Array.from({length: this.rondasTotales}, () => Math.floor(Math.random() * this.botones.length));
         }
 
-        validarColorElegido(valor) {
-            if (this.secuencia[this.posicionUsuario] === valor) {
-                this.sonidosBoton[valor].play();
+        validarColorElegido(indice) {
+            if (this.secuencia[this.posicionUsuario] === indice) {
+                this.sonidosBoton[indice].play();
+                this.alternarEstiloBoton(this.botones[indice]);
                 if (this.rondaActual === this.posicionUsuario) {
-                    this.actualizarRonda(this.rondaActual + 1);
-                    this.velocidad *= 0.98;
-                    this.verificarFinJuego();
+                    this.posicionUsuario = 0;
+                    this.rondaActual++;
+                    this.display.ronda.textContent = `Ronda ${this.rondaActual}`;
+                    this.mostrarSecuencia();
                 } else {
                     this.posicionUsuario++;
                 }
             } else {
                 this.perderJuego();
-            }
-        }
-
-        verificarFinJuego() {
-            if (this.rondaActual === this.rondasTotales) {
-                this.ganarJuego();
-            } else {
-                this.posicionUsuario = 0;
-                this.mostrarSecuencia();
             }
         }
 
@@ -105,8 +102,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const temporizador = setInterval(() => {
                 const boton = this.botones[this.secuencia[indiceSecuencia]];
                 this.sonidosBoton[this.secuencia[indiceSecuencia]].play();
-                this.alternarEstiloBoton(boton);
-                setTimeout(() => this.alternarEstiloBoton(boton), this.velocidad / 2);
+                this.alternarEstiloBoton(boton, true); // Activar el botón
+                setTimeout(() => {
+                    this.alternarEstiloBoton(boton, false); // Desactivar el botón
+                }, this.velocidad / 2);
+        
                 indiceSecuencia++;
                 if (indiceSecuencia > this.rondaActual) {
                     clearInterval(temporizador);
@@ -116,14 +116,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         alternarEstiloBoton(boton) {
-            boton.classList.toggle('boton-activo');
+            const estaActivo = boton.classList.contains('boton-activo');
+            boton.classList.toggle('boton-activo'); // Alternar la clase para activar/desactivar el estilo
+            if (estaActivo) {
+                // Si estaba activo, ahora se desactiva, aplicar color "apagado"
+                boton.style.fill = boton.getAttribute('data-color-inactivo'); // Usar un atributo data para guardar el color inactivo
+            } else {
+                // Si estaba inactivo, ahora se activa, aplicar color "activo"
+                boton.style.fill = boton.getAttribute('data-color-activo'); // Usar un atributo data para guardar el color activo
+            }
         }
 
         perderJuego() {
-            // Asegúrate de que el sonido de error esté correctamente inicializado y cargado.
-            if (this.sonidoError) {
-                this.sonidoError.play();
-            }
             this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
             this.actualizarEstadoJuego('Perdiste. Intenta de nuevo.');
@@ -133,8 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
             this.actualizarEstadoJuego('¡Ganaste!');
-            this.botones.forEach(elemento => elemento.classList.add('ganador'));
-            this.actualizarRonda('🏆');
+            this.botones.forEach(boton => boton.classList.add('ganador'));
         }
 
         actualizarEstadoJuego(mensaje) {
