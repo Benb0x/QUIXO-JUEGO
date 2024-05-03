@@ -1,3 +1,6 @@
 #caraCentro, #caraInferiorD, #caraInferiorI{
     fill:#E7E1E1
 }
+.boton-activo {
+    opacity: 1; /* o cualquier otra propiedad para destacar el botón activo */
+}

@@ -40,6 +40,7 @@
   },
   "homepage": "https://github.com/Benb0x/QUIXO-JUEGO#readme",
   "devDependencies": {
+    "nodemon": "^3.1.0",
     "serve": "^14.2.3"
   },
   "dependencies": {
