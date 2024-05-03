@@ -1,3 +1,4 @@
+document.getElementById("ronda").style.display = "none";   // Para ocultar
 document.addEventListener('DOMContentLoaded', function() {
     const botonEmpezar = document.getElementById("botonEmpezar");
     const estadoJuego = document.getElementById("estadoJuego");
@@ -5,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
 
     class Quixo {
-        constructor(botonesJuego, botonEmpezar, ronda, estadoJuego) {
+        constructor() {
             this.rondaActual = 0;
             this.posicionUsuario = 0;
             this.rondasTotales = 10;
@@ -13,16 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
             this.velocidad = 1000;
             this.botonesBloqueados = true;
             this.botones = Array.from(botonesJuego);
+            this.sonidosBoton = [];
+            this.cargarSonidos();
             this.display = {
                 botonEmpezar,
                 ronda,
                 estadoJuego
             };
-            this.sonidosBoton = [];
-            this.cargarSonidos().then(() => {
-                this.iniciar();
-                this.display.botonEmpezar.disabled = false; // Habilita el botón cuando todos los sonidos estén cargados
-            }).catch(error => console.error("Error al cargar sonidos:", error));
+            this.iniciar();
         }
 
         async cargarSonidos() {
@@ -34,8 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ];
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
-                    const audio = new Audio();
-                    audio.src = sonido;
+                    const audio = new Audio(sonido);
                     audio.addEventListener('canplaythrough', () => {
                         this.sonidosBoton[indice] = audio;
                         resolve();
@@ -43,15 +41,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     audio.addEventListener('error', () => reject(new Error(`Failed to load sound: ${sonido}`)));
                 });
             });
-            await Promise.all(promesas);
+            try {
+                await Promise.all(promesas);
+            } catch (error) {
+                console.error("Error loading sounds:", error);
+            }
         }
 
         iniciar() {
-            this.display.botonEmpezar.onclick = () => this.iniciarJuego();
+            this.display.botonEmpezar.addEventListener('click', () => this.iniciarJuego());
             this.botones.forEach(boton => {
-                // Establecer el color inactivo inicial al cargar la página
                 boton.style.fill = boton.getAttribute('data-color-inactivo');
-        
                 boton.addEventListener('click', (event) => {
                     if (!this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
-        
 
         iniciarJuego() {
             this.display.botonEmpezar.disabled = true;
@@ -81,69 +80,80 @@ document.addEventListener('DOMContentLoaded', function() {
 
         validarColorElegido(indice) {
             if (this.secuencia[this.posicionUsuario] === indice) {
-                this.sonidosBoton[indice].play();
-                this.alternarEstiloBoton(this.botones[indice]);
+                this.alternarEstiloBoton(this.botones[indice], true);
+                if (this.sonidosBoton[indice]) {
+                    this.sonidosBoton[indice].play();
+                }
+                setTimeout(() => {
+                    this.alternarEstiloBoton(this.botones[indice], false);
+                }, this.velocidad / 2);
+        
                 if (this.rondaActual === this.posicionUsuario) {
                     this.posicionUsuario = 0;
                     this.rondaActual++;
-                    this.display.ronda.textContent = `Ronda ${this.rondaActual}`;
-                    this.mostrarSecuencia();
+                    if (this.rondaActual < this.rondasTotales) {
+                        this.display.estadoJuego.textContent = `¡Bien hecho! Siguiente ronda: ${this.rondaActual + 1}`;
+                        setTimeout(() => this.mostrarSecuencia(), this.velocidad);
+                    } else {
+                        this.ganarJuego();
+                    }
                 } else {
                     this.posicionUsuario++;
+                    this.display.estadoJuego.textContent = `Correcto! Sigue así.`;
                 }
             } else {
-                this.perderJuego();
+                this.display.estadoJuego.textContent = `¡Error! Incorrecto.`;
+                setTimeout(() => this.perderJuego(), 500);
             }
         }
-
         mostrarSecuencia() {
             this.botonesBloqueados = true;
             let indiceSecuencia = 0;
-            const temporizador = setInterval(() => {
-                const boton = this.botones[this.secuencia[indiceSecuencia]];
-                this.sonidosBoton[this.secuencia[indiceSecuencia]].play();
-                this.alternarEstiloBoton(boton, true); // Activar el botón
-                setTimeout(() => {
-                    this.alternarEstiloBoton(boton, false); // Desactivar el botón
-                }, this.velocidad / 2);
-        
-                indiceSecuencia++;
-                if (indiceSecuencia > this.rondaActual) {
-                    clearInterval(temporizador);
+            const intervalo = setInterval(() => {
+                if (indiceSecuencia > 0) {
+                    this.alternarEstiloBoton(this.botones[this.secuencia[indiceSecuencia - 1]], false);
+                }
+                if (indiceSecuencia < this.rondaActual + 1) {
+                    this.alternarEstiloBoton(this.botones[this.secuencia[indiceSecuencia]], true);
+                    if (this.sonidosBoton[this.secuencia[indiceSecuencia]]) {
+                        this.sonidosBoton[this.secuencia[indiceSecuencia]].play();
+                    }
+                    indiceSecuencia++;
+                } else {
+                    clearInterval(intervalo);
                     this.botonesBloqueados = false;
                 }
             }, this.velocidad);
         }
 
-        alternarEstiloBoton(boton) {
-            const estaActivo = boton.classList.contains('boton-activo');
-            boton.classList.toggle('boton-activo'); // Alternar la clase para activar/desactivar el estilo
-            if (estaActivo) {
-                // Si estaba activo, ahora se desactiva, aplicar color "apagado"
-                boton.style.fill = boton.getAttribute('data-color-inactivo'); // Usar un atributo data para guardar el color inactivo
+        alternarEstiloBoton(boton, activar) {
+            if (activar) {
+                boton.classList.add('boton-activo');
+                boton.style.fill = boton.getAttribute('data-color-activo');
             } else {
-                // Si estaba inactivo, ahora se activa, aplicar color "activo"
-                boton.style.fill = boton.getAttribute('data-color-activo'); // Usar un atributo data para guardar el color activo
+                boton.classList.remove('boton-activo');
+                boton.style.fill = boton.getAttribute('data-color-inactivo');
             }
         }
 
         perderJuego() {
+            this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
             this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
-            this.actualizarEstadoJuego('Perdiste. Intenta de nuevo.');
+            this.resetJuego();
         }
 
         ganarJuego() {
+            this.display.estadoJuego.textContent = '¡Ganaste!';
             this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
-            this.actualizarEstadoJuego('¡Ganaste!');
-            this.botones.forEach(boton => boton.classList.add('ganador'));
+            this.resetJuego();
         }
 
-        actualizarEstadoJuego(mensaje) {
-            this.display.estadoJuego.textContent = mensaje;
+        resetJuego() {
+            this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
         }
     }
 
-    const juegoQuixo = new Quixo(botonesJuego, botonEmpezar, ronda, estadoJuego);
+    new Quixo();
 });

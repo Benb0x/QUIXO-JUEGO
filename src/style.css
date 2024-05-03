@@ -23,8 +23,8 @@ h1 {
 #circulo {
     background: #625F5F;
     border-radius: 50%;
-    width: 900px;
-    height: 900px;
+    width: 800px;
+    height: 800px;
     margin: auto; /* Centra el círculo horizontalmente y agrega margen superior */
     display: flex;
     justify-content: center;
@@ -35,7 +35,9 @@ h1 {
     height: 100vh;
     justify-content: center;
     align-items: center;
-    
+}
+#ronda {
+    display: none;
 }
 #quixoLineas {
     /* Ajustar si es necesario para centrar el SVG dentro del círculo */
@@ -46,17 +48,25 @@ h1 {
 }
 
 #botonEmpezar {
-    background-color: #FFFFFF; /* Color blanco para el botón después de empezar */
-    color: #4CAF50; /* Color del texto verde, igual al botón original */
-    border: none;
     border-radius: 5px;
+    display: inline-block; 
+    color: white;
     padding: 10px 20px;
-    font-size: 16px;
     cursor: pointer;
-    position: relative; /* Cambia a 'relative' para que siga el flujo normal del documento */
+    position: relative;
     margin: 0 auto 10px; /* Centra horizontalmente y añade margen inferior */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: inline-block; /* Hace que el botón se comporte como un elemento en línea con bloque */
+    background-color: #007bff; /* Color base del botón */
+    transition: transform 0.3s ease-in-out; /* Transición suave del efecto de pulsación */
+}
+
+
+.pulse-effect:hover {
+background-color: #0056b3; /* Cambia el color al pasar el cursor sobre el botón */
+}
+
+.pulse-effect:active {
+transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se hace clic */
 }
 
 #estadoJuego, #ronda {
