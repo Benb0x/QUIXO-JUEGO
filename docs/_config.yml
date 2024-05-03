@@ -1,0 +1,11 @@
+title: Quixo Dice
+description: "Donde la diversión y el desafío se unen en una experiencia interactiva vibrante. Este juego está diseñado para jugadores de todas las edades, poniendo a prueba tu memoria y tu capacidad de seguir secuencias de colores."
+url: "https://benb0x.github.io"
+baseurl: "/QUIXO-JUEGO"  # Si tu sitio está directamente en la raíz, puedes dejar esto como está o ajustarlo si está en una subcarpeta.
+
+# Excluir directorios y archivos que no necesitan ser procesados por Jekyll
+exclude:
+  - node_modules/
+  - Gemfile
+  - Gemfile.lock
+  - vendor
