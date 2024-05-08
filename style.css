@@ -1,6 +1,5 @@
 body {
-    background-color: #DCDADA;
-    font-family: "Noto Sans", Arial, sans-serif;
+    background-color: #DADBDC; /* Cambio a un color de fondo más suave */
     margin: 0;
     padding-top: 50px; /* Aumenta el espacio en la parte superior si es necesario */
     text-align: center; /* Esto centra horizontalmente todos los elementos en línea o en línea-bloque */
@@ -10,32 +9,51 @@ body {
     justify-content: flex-start;  /* Alinea los elementos al inicio del contenedor flex */
 }
 .logo-container {
-    margin-bottom: 30px;
+    position: absolute;
+    left: 0;
+    top: 10%; 
+    transform: translateY(-50%); 
+    margin-left: 20px;
 }
 #juego {
-    text-align: center;
+    text-align:right;
 }
 h1 {
     text-align: center;
-    color: black;
-    font-size: 40px;
+    font-size: 36px; /* Tamaño más grande para el título */
+    color: #2F4F4F;
+    position: absolute;
+    left: 0;
+    top: 28%; 
+    transform: translateY(-50%); 
+    margin-left: 20px;
+    font-family: "Sanchez", serif;
 }
-#circulo {
-    background: #625F5F;
+#p1{
+    font-size: 22px;
+    line-height: 1.6;
+    color: #2F4F4F;
+    position: absolute;
+    left: 0;
+    top: 38%; 
+    transform: translateY(-50%); 
+    margin-left: 20px;
+    text-align: justify;
+}
+
+
+.circulo {
+    background: #312E2E;
     border-radius: 50%;
-    width: 800px;
-    height: 800px;
+    width: 700px;
+    height: 700px;
     margin: auto; /* Centra el círculo horizontalmente y agrega margen superior */
     display: flex;
+    margin-left: 1000px; 
     justify-content: center;
-    align-items: center;
+    
 }
-.contenedor{
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-}
+
 #ronda {
     display: none;
 }
@@ -48,21 +66,35 @@ h1 {
 }
 
 #botonEmpezar {
-    border-radius: 5px;
-    display: inline-block; 
-    color: white;
     padding: 10px 20px;
+    background-color: #4682B4; /* Azul oscuro para el botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; /* Tamaño del texto en el botón */
+    transition: background-color 0.3s ease;
+    display: inline-block; 
     cursor: pointer;
     position: relative;
     margin: 0 auto 10px; /* Centra horizontalmente y añade margen inferior */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: #007bff; /* Color base del botón */
-    transition: transform 0.3s ease-in-out; /* Transición suave del efecto de pulsación */
+    position: absolute;
+    left: 0;
+    top: 57%; 
+    transform: translateY(-50%); 
+    margin-left: 320px;
+}
+.contenedorJuego{
+    display: flex;
+    height: 100vh;
+    justify-content:right;
 }
 
 
+
 .pulse-effect:hover {
-background-color: #0056b3; /* Cambia el color al pasar el cursor sobre el botón */
+    background-color: #4169E1;
 }
 
 .pulse-effect:active {
@@ -70,12 +102,21 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 }
 
 #estadoJuego, #ronda {
-    color: #333;
-    font-size: 18px;
+    color: #000000;
+    font-size: 22px;
     margin: 10px auto 0; /* Centra estos elementos y añade espacio superior */
     display: block; /* Asegura que cada uno esté en su propia línea */
+    position: absolute;
+    left: 0;
+    top: 48%; 
+    transform: translateY(-50%); 
+    margin-left: 20px;
 }
 
-#estadoJuego {
-    margin-bottom: 5px; /* Espacio entre 'Estado del juego' y 'Ronda' */
+#estadoJuego { 
+    font-size: 22px; /* Ligeramente más grande para destacar */
+    color: #4682B4; /* Azul para que resalte entre el texto normal */
+    margin-bottom: 20px;
+    top: 49%; 
+    /* Espacio entre 'Estado del juego' y 'Ronda' */
 }

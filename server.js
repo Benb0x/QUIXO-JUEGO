@@ -3,16 +3,16 @@ const path = require('path');
 const app = express();
 
 // Configurar la carpeta 'src' como estática
-app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname)));
 
 // Ruta principal que sirve index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Ruta para manejar las solicitudes de archivos de sonido
 app.get('/sounds/:sound', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'sounds', req.params.sound));
+  res.sendFile(path.join(__dirname, 'sounds', req.params.sound));
 });
 
 // Escuchar en el puerto 3001

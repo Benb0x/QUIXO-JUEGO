@@ -4,7 +4,7 @@
   "description": "\"Quixo's Simon Dice es un juego interactivo que desafía la memoria y la habilidad de seguir secuencias de colores, apto para todas las edades y perfecto para entrenar la agilidad mental.\"",
   "main": "index.js",
   "scripts": {
-    "start": "serve src/ -s && echo 'Servidor iniciado en http://localhost:3000'",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

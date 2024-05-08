@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.posicionUsuario = 0;
             this.rondasTotales = 10;
             this.secuencia = [];
-            this.velocidad = 1000;
+            this.velocidad = 700;
             this.botonesBloqueados = true;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
