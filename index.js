@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_1 (1).mp3',
                 'sounds/sounds_2 (1).mp3',
                 'sounds/sounds_3 (1).mp3',
-                'sounds/sounds_4 (1).mp3'
+                'sounds/sounds_4 (1).mp3',
+                'sounds/sounds_error (1).wav'
             ];
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
@@ -66,7 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
             this.actualizarRonda(0);
             this.posicionUsuario = 0;
             this.secuencia = this.crearSecuencia();
+            this.resetEstadoJuego();  
             this.mostrarSecuencia();
+        }
+
+        resetEstadoJuego() {
+            this.display.estadoJuego.textContent = 'Listo para comenzar!';
+            this.display.estadoJuego.style.color = '#4682B4';  // Color predeterminado
         }
 
         actualizarRonda(valor) {
@@ -138,9 +145,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         perderJuego() {
             this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
+            this.display.estadoJuego.style.color = 'red';
             this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
             this.resetJuego();
+            
+            // Reproducir el sonido de error
+            if (this.sonidosBoton[4]) {  // Asumiendo que el sonido de error es el índice 4
+                this.sonidosBoton[4].play();
+            }
         }
 
         ganarJuego() {
