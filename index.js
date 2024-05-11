@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.posicionUsuario = 0;
                     this.rondaActual++;
                     if (this.rondaActual < this.rondasTotales) {
-                        this.display.estadoJuego.textContent = `¡Bien hecho! Siguiente ronda: ${this.rondaActual + 1}`;
+                        this.display.estadoJuego.textContent = `¡Bien hecho! Ronda: ${this.rondaActual + 1}`;
                         setTimeout(() => this.mostrarSecuencia(), this.velocidad);
                     } else {
                         this.ganarJuego();
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.display.estadoJuego.textContent = `Correcto! Sigue así.`;
                 }
             } else {
-                this.display.estadoJuego.textContent = `¡Error! Incorrecto.`;
+                //this.display.estadoJuego.textContent = `¡Error! Incorrecto.`;
                 setTimeout(() => this.perderJuego(), 500);
             }
         }

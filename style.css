@@ -66,7 +66,7 @@ h1 {
 }
 
 #botonEmpezar {
-    padding: 15px 25px;
+    padding: 25px 35px;
     background-color: #4682B4; /* Azul oscuro para el botón */
     color: white;
     border: none;
@@ -120,3 +120,8 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     top: 54%; 
     /* Espacio entre 'Estado del juego' y 'Ronda' */
 }
+
+.blue-bold {
+    color: #4682B4;
+    font-weight: bold;
+  }
