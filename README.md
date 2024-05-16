@@ -9,4 +9,4 @@ El uso, distribución, modificación o despliegue de este software y/o su códig
 ## Deploy
 
 
-La aplicación se encuentra publicado a través de Github Pages, accesible a todo usuario: [https://benb0x.github.io/QUIXO-JUEGO/(https://benb0x.github.io/QUIXO-JUEGO/)]
+La aplicación se encuentra publicado a través de Github Pages, accesible a todo usuario: https://benb0x.github.io/QUIXO-JUEGO/
