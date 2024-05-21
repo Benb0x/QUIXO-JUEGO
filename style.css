@@ -21,7 +21,7 @@ body {
 h1 {
     text-align: center;
     font-size: 48px; /* Tamaño más grande para el título */
-    color: #2F4F4F;
+    color: #1f4a9b;
     position: absolute;
     left: 0;
     top: 26%; 
@@ -89,6 +89,8 @@ h1 {
     display: flex;
     height: 100vh;
     justify-content:right;
+    width: 100%;
+    overflow: auto; /* Permite que el texto desborde si es necesario */
 }
 
 
@@ -125,3 +127,35 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     color: #4682B4;
     font-weight: bold;
   }
+
+  @keyframes rainbow-text {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.ganador {
+    font-size: 6vw; /* Ajustar el tamaño para que sea más pequeño y adaptativo */
+    font-family: 'Baloo 2', cursive; /* Aplica la fuente Baloo 2 */
+    background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow-text 5s ease infinite;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    margin: 20px 0; /* Ajusta el margen superior e inferior */
+}
+/*@keyframes animacion-ganador {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}*/
+
+.animacion-ganador {
+    animation: animacion-ganador 1s ease-in-out;
+}

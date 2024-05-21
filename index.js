@@ -1,4 +1,3 @@
-document.getElementById("ronda").style.display = "none";   // Para ocultar
 document.addEventListener('DOMContentLoaded', function() {
     const botonEmpezar = document.getElementById("botonEmpezar");
     const estadoJuego = document.getElementById("estadoJuego");
@@ -9,12 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
         constructor() {
             this.rondaActual = 0;
             this.posicionUsuario = 0;
-            this.rondasTotales = 10;
+            this.rondasTotales = 1;
             this.secuencia = [];
             this.velocidad = 700;
             this.botonesBloqueados = true;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
+            this.inactividadTimeout = null; // Añadir un temporizador de inactividad
             this.cargarSonidos();
             this.display = {
                 botonEmpezar,
@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_2 (1).mp3',
                 'sounds/sounds_3 (1).mp3',
                 'sounds/sounds_4 (1).mp3',
-                'sounds/sounds_error (1).wav'
+                'sounds/sounds_error (1).wav',
+                'sounds/win.ogg' // Asegúrate de que la ruta al archivo sea correcta
             ];
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
@@ -74,11 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
         resetEstadoJuego() {
             this.display.estadoJuego.textContent = 'Listo para comenzar!';
             this.display.estadoJuego.style.color = '#4682B4';  // Color predeterminado
+            this.display.estadoJuego.classList.remove('ganador'); // Quita la clase ganador
+            this.display.estadoJuego.style.marginLeft = '20px'; // Resetea el margen izquierdo
         }
 
         actualizarRonda(valor) {
             this.rondaActual = valor;
-            this.display.ronda.textContent = `Ronda ${this.rondaActual}`;
+            //this.display.ronda.textContent = `Ronda ${this.rondaActual}`;
         }
 
         crearSecuencia() {
@@ -87,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         validarColorElegido(indice) {
             if (this.secuencia[this.posicionUsuario] === indice) {
+                clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
                 this.alternarEstiloBoton(this.botones[indice], true);
                 if (this.sonidosBoton[indice]) {
                     this.sonidosBoton[indice].play();
@@ -107,12 +111,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     this.posicionUsuario++;
                     this.display.estadoJuego.textContent = `Correcto! Sigue así.`;
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Establecer el temporizador de inactividad
                 }
             } else {
-                //this.display.estadoJuego.textContent = `¡Error! Incorrecto.`;
-                setTimeout(() => this.perderJuego(), 500);
+                setTimeout(() => this.perderJuego(), 250);
             }
         }
+
         mostrarSecuencia() {
             this.botonesBloqueados = true;
             let indiceSecuencia = 0;
@@ -129,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     clearInterval(intervalo);
                     this.botonesBloqueados = false;
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Establecer el temporizador de inactividad después de mostrar la secuencia
                 }
             }, this.velocidad);
         }
@@ -144,6 +150,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         perderJuego() {
+            clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
+            this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
+            this.display.estadoJuego.style.color = 'red';
+            this.display.botonEmpezar.disabled = false;
+            this.botonesBloqueados = true;
+            this.resetJuego();
+            
+            // Reproducir el sonido de error
+            if (this.sonidosBoton[4]) {  // Asumiendo que el sonido de error es el índice 4
+                this.sonidosBoton[4].play();
+            }
+        }
+
+        perderJuego() {
+            clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
             this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
             this.display.estadoJuego.style.color = 'red';
             this.display.botonEmpezar.disabled = false;
@@ -157,9 +178,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         ganarJuego() {
-            this.display.estadoJuego.textContent = '¡Ganaste!';
+            clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
+            this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S &nbsp;&nbsp;&nbsp; G A N A S T E!';
+            this.display.estadoJuego.style.color = 'green';
+            this.display.estadoJuego.classList.add('ganador');
+            this.display.estadoJuego.style.marginLeft = '195px'; // Ajusta el valor según lo necesites
+            this.display.ronda.style.display = 'none';
             this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
+        
+            // Reproduce el sonido de victoria
+            if (this.sonidosBoton[5]) {  // Asumiendo que el sonido de victoria es el índice 5
+                this.sonidosBoton[5].play();
+            }
+        
+            // Cambia el color de los elementos especificados
+            const nuevoColor = '#E7E1E1'; // Dorado, ajusta según sea necesario
+            const elementos = [cascoS, cascoI, ojos, , bigote];
+
+            elementos.forEach((elemento, index) => {
+                setTimeout(() => {
+                    elemento.style.fill = nuevoColor;
+                    elemento.classList.add('animacion-ganador');
+                }, index * 500); // Ajusta el tiempo entre cada animación
+            });
+
+            setTimeout(() => {
+                elementos.reverse().forEach((elemento, index) => {
+                    setTimeout(() => {
+                        elemento.style.fill = '';
+                        elemento.classList.add('animacion-ganador');
+                    }, index * 500); // Ajusta el tiempo entre cada animación
+                });
+            }, elementos.length * 500); // Espera a que termine la primera secuencia
+        
             this.resetJuego();
         }
 
