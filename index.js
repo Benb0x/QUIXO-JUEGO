@@ -184,7 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.display.estadoJuego.classList.add('ganador');
             this.display.estadoJuego.style.marginLeft = '195px'; // Ajusta el valor según lo necesites
             this.display.ronda.style.display = 'none';
-            this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
         
             // Reproduce el sonido de victoria
@@ -193,27 +192,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         
             // Cambia el color de los elementos especificados
-            const nuevoColor = '#E7E1E1'; // Dorado, ajusta según sea necesario
-            const elementos = [cascoS, cascoI, ojos, , bigote];
-
+            const nuevoColor = '#5CE261'; // Dorado, ajusta según sea necesario
+            const elementos = [cascoS, cascoI, ojos, bigote];
+        
             elementos.forEach((elemento, index) => {
                 setTimeout(() => {
                     elemento.style.fill = nuevoColor;
                     elemento.classList.add('animacion-ganador');
-                }, index * 500); // Ajusta el tiempo entre cada animación
+                }, index * 100); // Ajusta el tiempo entre cada animación
             });
-
+        
             setTimeout(() => {
                 elementos.reverse().forEach((elemento, index) => {
                     setTimeout(() => {
                         elemento.style.fill = '';
                         elemento.classList.add('animacion-ganador');
-                    }, index * 500); // Ajusta el tiempo entre cada animación
+                    }, index * 100); // Ajusta el tiempo entre cada animación
                 });
-            }, elementos.length * 500); // Espera a que termine la primera secuencia
+            }, elementos.length * 100); // Espera a que termine la primera secuencia
         
-            this.resetJuego();
+            setTimeout(() => {
+                this.display.botonEmpezar.disabled = false;
+                this.resetJuego();
+            }, (elementos.length * 2 * 100) + 1000); // Espera a que termine la animación para habilitar el botón
         }
+        
 
         resetJuego() {
             this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
