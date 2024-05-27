@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         constructor() {
             this.rondaActual = 0;
             this.posicionUsuario = 0;
-            this.rondasTotales = 1;
+            this.rondasTotales = 15;
             this.secuencia = [];
             this.velocidad = 700;
             this.botonesBloqueados = true;
