@@ -198,7 +198,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     }
     .circulo {
         width: 250%; /* Aumenta el ancho del círculo para que desborde los bordes */
-        height: 85vh; /* Mantiene la proporción original */
+        height: 95vh; /* Mantiene la proporción original */
         margin: 0 -25%; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
         display: flex;
         justify-content: center;
@@ -222,7 +222,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         margin: 20px auto; /* Centra el botón y agrega un margen superior */
         width: 80%; /* Ajusta el ancho del botón */
         left: 50%;
-        top: 200%;
+        top: 175%;
         transform: translateX(-50%); /* Centra el botón horizontalmente */
         padding: 15px 25px; /* Aumenta el relleno para hacerlo más alto */
         background-color: #4682B4; /* Color del fondo del botón */
@@ -244,7 +244,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         text-align: center;
         left: 50%;
         transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
-        top:60%;
+        top:90%;
     }
 }
 @media (min-width: 430px) and (max-width: 932px) {
