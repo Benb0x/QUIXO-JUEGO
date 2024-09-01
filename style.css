@@ -247,47 +247,53 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top:75%;
     }
 }
+
+/*body .logo-container, body .circulo, body #botonEmpezar, body #estadoJuego {
+    all: unset; /* Resetea todos los estilos aplicados */
+   /* display: block; /* Asegura que los elementos sean bloques */
+/*}*/
+
 @media (min-width: 430px) and (max-width: 932px) {
     body {
-        padding-top: 30px; /* Ajusta el espacio superior si es necesario */
+        padding-top: 30px;
     }
     
     h1 {
-        font-size: 48px; /* Ajusta el tamaño del título */
-        margin: 0 auto; /* Centra el título */
-        top: 10%; /* Ajusta la posición vertical del título */
+        font-size: 48px;
+        margin: 0 auto;
+        padding-top: 25%; /* Ajusta el valor para el espacio superior */
         text-align: center;
     }
 
     #p1 {
-        font-size: 28px;
+        font-size: 22px;
         margin: 0 20px;
-        top: 35%;
+        padding-top: 23%;
         text-align: center;
-        position: relative; /* Asegura que no esté en posición absoluta */
     }
 
     .logo-container {
-        width: 100px; /* Ajusta el tamaño del logo */
+        width: 100px;
         margin-top: 30px;
+        align-items: center;
     }
 
     .circulo {
-        width: 100%; /* Ajusta el tamaño del círculo */
+        width: 100%;
         height: auto;
-        margin: 20px auto; /* Centra el círculo */
+        margin: 20px auto;
     }
 
     #botonEmpezar {
-        margin: 20px auto; /* Centra el botón */
-        width: 60%; /* Ajusta el ancho del botón */
-        padding: 15px 25px; /* Aumenta el padding del botón */
-        font-size: 18px; /* Aumenta el tamaño del texto en el botón */
+        margin: 20px auto;
+        width: 60%;
+        padding: 15px 25px;
+        font-size: 18px;
     }
 
     #estadoJuego {
-        font-size: 24px; /* Ajusta el tamaño del texto de estado */
-        margin: 10px auto; /* Centra el texto */
+        font-size: 24px;
+        margin: 10px auto;
         text-align: center;
     }
 }
