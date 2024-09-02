@@ -317,6 +317,37 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         text-align: center;
     }
 }
+@media(min-width: 1201px) {
+    .logo-container {
+        top: 10%;
+        left: 50px;
+        transform: translateX(0);
+    }
+
+    .logo-image {
+        width: 200px;
+    }
+
+    h1 {
+        font-size: 58px;
+        margin-top: 20px;
+    }
+
+    #p1 {
+        font-size: 28px;
+        margin: 20px;
+    }
+
+    .circulo {
+        width: 500px;
+        height: 500px;
+    }
+
+    #botonEmpezar {
+        padding: 15px 30px;
+        font-size: 18px;
+    }
+}
 
 /*pantallas pequeñas*/
 
