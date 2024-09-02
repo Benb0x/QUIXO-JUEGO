@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const ronda = document.getElementById("ronda");
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
 
+    botonEmpezar.addEventListener('click', function() {
+        new Quixo();
+    });
+
     class Quixo {
         constructor() {
             this.rondaActual = 0;
@@ -51,6 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         iniciar() {
+            this.cargarSonidos();
+            
             this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
             this.botones.forEach(boton => {
                 boton.style.fill = boton.getAttribute('data-color-inactivo');
