@@ -257,72 +257,8 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     all: unset; /* Resetea todos los estilos aplicados */
    /* display: block; /* Asegura que los elementos sean bloques */
 /*}*/
-@media (min-width: 430px) {
+@media screen and (min-width: 430px) and (max-width: 932px) {
     body {
-        padding-top: 25px;
-    }
-    
-    
-    h1 {
-        position: absolute;
-        top: 8%; /* Ajusta este valor según necesites */
-        left: 50%;
-        transform: translateX(-50%); /* Centra horizontalmente */
-        font-size: 50px; /* Tamaño adecuado para pantallas grandes */
-    }
-
-    #p1 {
-        position: absolute;
-        top: 30%; /* Ajusta la posición vertical */
-        left: 50%;
-        transform: translateX(-50%); /* Centra horizontalmente */
-        font-size: 20px; /* Ajusta el tamaño del texto */
-        text-align: center;
-        width: 80%; /* Asegura que el texto no sea demasiado ancho */
-
-    }
-
-    .logo-container {
-        position: absolute;
-        top: 2%; /* Ajusta la posición vertical del logo */
-        left: 50%;
-        transform: translateX(-50%); /* Centra horizontalmente */
-        width: 150px; /* Tamaño del logo adecuado para pantallas grandes */
-    }
-
-    .circulo {
-        position: absolute;
-        top: 108%; /* Ajusta la posición vertical */
-        left: 75%;
-        transform: translate(-50%, -50%); /* Centra el círculo */
-        width: 150%; /* Ajusta el tamaño del círculo */
-        height: auto; /* Mantén la proporción */
-        margin: 0 -25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden; /* Oculta cualquier contenido que desborde */
-        border-radius: 50%; 
-    }
-    
-    
-
-    #botonEmpezar {
-        position: absolute;
-        top: 135%; /* Ajusta la posición vertical del botón */
-        left: 50%;
-        transform: translateX(-50%); /* Centra horizontalmente */
-        width: 60%; /* Ajusta el ancho del botón */
-        padding: 20px; /* Aumenta el padding para pantallas grandes */
-        font-size: 20px; /* Ajusta el tamaño del texto del botón */
-    }
-
-    #estadoJuego {
-        position: absolute;
-        top: 60%; /* Ajusta la posición vertical del texto */
-        left: 50%;
-        transform: translateX(-50%); /* Centra horizontalmente */
-        font-size: 24px; /* Ajusta el tamaño del texto */
-        text-align: center;
+        background-color: yellow !important; /* Prueba para ver si el cambio se aplica */
     }
 }
