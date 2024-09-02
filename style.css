@@ -169,3 +169,162 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     animation: animacion-ganador 1s ease-in-out;
 }
 
+@media(max-width: 768px){
+    body{
+        padding-top: 20px ;
+    }
+    h1{
+        font-size: 66px; /* Ajusta el tamaño del texto en móviles */
+        margin-left: 0 ;
+        text-align: center;
+        top: 15% ;
+        position: relative;
+    }
+    #p1{
+        font-size: 18px;
+        margin: 0 10px;
+        top:43%;
+        text-align: center;
+        position: relative;
+    }
+    .logo-container{
+        position: static; 
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        margin-left: 0; 
+        margin-top: 20px;
+    }
+    .logo-image {
+        width: 120px; 
+        align-items: center;
+    }
+    .circulo {
+        width: 250%; /* Aumenta el ancho del círculo para que desborde los bordes */
+        height: 95vh; /* Mantiene la proporción original */
+        margin: 0 -25%; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Oculta cualquier contenido que desborde */
+        border-radius: 50%; 
+    }
+
+    #quixoLineas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Asegura que el contenido esté centrado dentro del círculo */
+        height: auto;
+    }
+    #figura svg {
+        width: 90%; /* Ajusta el tamaño del SVG sin deformarlo */
+        height: auto; /* Mantiene la proporción original del SVG */
+    }
+    #botonEmpezar {
+        margin: 20px auto; /* Centra el botón y agrega un margen superior */
+        width: 80%; /* Ajusta el ancho del botón */
+        left: 50%;
+        top: 195%;
+        transform: translateX(-50%); /* Centra el botón horizontalmente */
+        padding: 15px 25px; /* Aumenta el relleno para hacerlo más alto */
+        background-color: #4682B4; /* Color del fondo del botón */
+        color: white; /* Color del texto */
+        border: none; /* Elimina el borde */
+        border-radius: 5px; /* Bordes redondeados */
+        font-size: 16px; /* Tamaño del texto */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Añade una sombra para darle profundidad */
+        transition: background-color 0.3s ease; /* Suaviza el cambio de color de fondo */
+    }
+
+    #botonEmpezar:hover {
+        background-color: #4169E1; /* Color de fondo al pasar el mouse */
+    }
+    
+    #estadoJuego, #ronda {
+        margin-left: 0; /* Elimina el margen izquierdo */
+        text-align: center;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
+        top:75%;
+    }
+}
+
+@media (min-width: 430px) and (max-width: 932px) {
+    body {
+        padding-top: 25px;
+    }
+    
+    
+    h1 {
+        position: absolute;
+        top: 8%; /* Ajusta este valor según necesites */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        font-size: 50px; /* Tamaño adecuado para pantallas grandes */
+    }
+
+    #p1 {
+        position: absolute;
+        top: 30%; /* Ajusta la posición vertical */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        font-size: 20px; /* Ajusta el tamaño del texto */
+        text-align: center;
+        width: 80%; /* Asegura que el texto no sea demasiado ancho */
+
+    }
+
+    .logo-container {
+        position: absolute;
+        top: 2%; /* Ajusta la posición vertical del logo */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        width: 150px; /* Tamaño del logo adecuado para pantallas grandes */
+        align-items: center;
+    }
+
+    .circulo {
+        position: absolute;
+        top: 108%; /* Ajusta la posición vertical */
+        left: 75%;
+        transform: translate(-50%, -50%); /* Centra el círculo */
+        width: 150%; /* Ajusta el tamaño del círculo */
+        height: auto; /* Mantén la proporción */
+        margin: 0 -25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Oculta cualquier contenido que desborde */
+        border-radius: 50%; 
+    }
+    
+    
+
+    #botonEmpezar {
+        position: absolute;
+        top: 135%; /* Ajusta la posición vertical del botón */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        width: 60%; /* Ajusta el ancho del botón */
+        padding: 20px; /* Aumenta el padding para pantallas grandes */
+        font-size: 20px; /* Ajusta el tamaño del texto del botón */
+    }
+
+    #estadoJuego {
+        position: absolute;
+        top: 60%; /* Ajusta la posición vertical del texto */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        font-size: 24px; /* Ajusta el tamaño del texto */
+        text-align: center;
+    }
+}
+
+/*pantallas pequeñas*/
+
+/*body .logo-container, body .circulo, body #botonEmpezar, body #estadoJuego {
+    all: unset; /* Resetea todos los estilos aplicados */
+   /* display: block; /* Asegura que los elementos sean bloques */
+/*}*/
