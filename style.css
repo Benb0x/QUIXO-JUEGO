@@ -316,7 +316,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
     #estadoJuego {
         position: absolute;
-        top: 52%; /* Ajusta la posición vertical del texto */
+        top: 55%; /* Ajusta la posición vertical del texto */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
         font-size: 4vw; /* Ajusta el tamaño del texto */
