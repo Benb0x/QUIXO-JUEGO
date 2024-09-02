@@ -253,39 +253,9 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top:75%;
     }
 }
-@media(min-width: 769px) and (max-width: 1200px) {
-    .logo-container {
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .logo-image {
-        width: 150px;
-    }
-
-    h1 {
-        font-size: 6vw;
-    }
-
-    #p1 {
-        font-size: 3vw;
-        margin: 10px 30px;
-    }
-
-    .circulo {
-        width: 350px;
-        height: 350px;
-    }
-
-    #botonEmpezar {
-        padding: 12px 25px;
-        font-size: 18px;
-    }
-}
 
 
-@media (min-width: 933px) {
+@media (min-width: 430px) and (max-width: 932px) {
     body {
         padding-top: 25px;
     }
@@ -295,7 +265,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 8%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 50px; /* Ajuste según la pantalla */
+        font-size: 5vw; /* Ajuste relativo al ancho de la pantalla */
     }
 
     #p1 {
@@ -303,7 +273,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 30%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 20px;
+        font-size: 3.5vw;
         text-align: center;
         width: 80%;
     }
@@ -323,7 +293,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         left: 50%;
         transform: translate(-50%, -50%);
         width: 80%;
-        max-width: 500px; /* Ajusta el tamaño del círculo */
+        max-width: 400px;
         height: auto;
         margin: 0 auto;
     }
@@ -346,37 +316,8 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         font-size: 24px;
         text-align: center;
     }
-}
-@media(min-width: 1201px) {
-    .logo-container {
-        top: 10%;
-        left: 50px;
-        transform: translateX(0);
-    }
 
-    .logo-image {
-        width: 200px;
-    }
 
-    h1 {
-        font-size: 58px;
-        margin-top: 20px;
-    }
-
-    #p1 {
-        font-size: 28px;
-        margin: 20px;
-    }
-
-    .circulo {
-        width: 500px;
-        height: 500px;
-    }
-
-    #botonEmpezar {
-        padding: 15px 30px;
-        font-size: 18px;
-    }
 }
 
 /*pantallas pequeñas*/
