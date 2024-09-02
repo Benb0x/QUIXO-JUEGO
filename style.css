@@ -168,6 +168,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 .animacion-ganador {
     animation: animacion-ganador 1s ease-in-out;
 }
+
 @media(max-width: 768px){
     body{
         padding-top: 20px ;
