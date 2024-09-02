@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
 
     botonEmpezar.addEventListener('click', function() {
+        audio.preload = 'auto';
         new Quixo();
     });
 
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         iniciar() {
             this.cargarSonidos();
-            
+
             this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
             this.botones.forEach(boton => {
                 boton.style.fill = boton.getAttribute('data-color-inactivo');
