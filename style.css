@@ -107,6 +107,9 @@ h1 {
 .pulse-effect:active {
 transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se hace clic */
 }
+.concontenedorEstado{
+    position: relative;
+}
 
 #estadoJuego, #ronda {
     color: #000000;
@@ -118,6 +121,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     top: 54%; 
     transform: translateY(-50%); 
     margin-left: 20px;
+    
 }
 
 #estadoJuego { 
@@ -165,6 +169,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     animation: animacion-ganador 1s ease-in-out;
 }
 
+
 /*pantallas pequeñas*/
 @media(max-width: 768px){
     body{
@@ -172,9 +177,9 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     }
     h1{
         font-size: 66px; /* Ajusta el tamaño del texto en móviles */
-        margin-left: 0 !important;
+        margin-left: 0 ;
         text-align: center;
-        top: 15% !important;
+        top: 15% ;
         position: relative;
     }
     #p1{
@@ -252,49 +257,72 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     all: unset; /* Resetea todos los estilos aplicados */
    /* display: block; /* Asegura que los elementos sean bloques */
 /*}*/
-@media (min-width: 769px) and (max-width: 932px) {
+@media (min-width: 430px) {
     body {
-        padding-top: 30px;
+        padding-top: 25px;
     }
     
+    
     h1 {
-        font-size: 48px;
-        margin: 0 auto;
-        padding-top: 25%;
-        text-align: center;
+        position: absolute;
+        top: 8%; /* Ajusta este valor según necesites */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        font-size: 50px; /* Tamaño adecuado para pantallas grandes */
     }
 
     #p1 {
-        font-size: 22px;
-        margin: 0 20px;
-        padding-top: 23%;
+        position: absolute;
+        top: 30%; /* Ajusta la posición vertical */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        font-size: 20px; /* Ajusta el tamaño del texto */
         text-align: center;
+        width: 80%; /* Asegura que el texto no sea demasiado ancho */
+
     }
 
     .logo-container {
-        width: 100px;
-        margin-top: 30px;
-        align-items: center;
+        position: absolute;
+        top: 2%; /* Ajusta la posición vertical del logo */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        width: 150px; /* Tamaño del logo adecuado para pantallas grandes */
     }
 
     .circulo {
-        width: 100%;
-        height: auto;
-        margin: 20px auto;
+        position: absolute;
+        top: 108%; /* Ajusta la posición vertical */
+        left: 75%;
+        transform: translate(-50%, -50%); /* Centra el círculo */
+        width: 150%; /* Ajusta el tamaño del círculo */
+        height: auto; /* Mantén la proporción */
+        margin: 0 -25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Oculta cualquier contenido que desborde */
+        border-radius: 50%; 
     }
+    
+    
 
     #botonEmpezar {
-        margin: 20px auto;
-        width: 60%;
-        padding: 15px 25px;
-        font-size: 18px;
-        margin-top: 80px;
+        position: absolute;
+        top: 144%; /* Ajusta la posición vertical del botón */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        width: 60%; /* Ajusta el ancho del botón */
+        padding: 20px; /* Aumenta el padding para pantallas grandes */
+        font-size: 20px; /* Ajusta el tamaño del texto del botón */
     }
 
     #estadoJuego {
-        font-size: 24px;
-        margin: 10px auto;
+        position: absolute;
+        top: 65%; /* Ajusta la posición vertical del texto */
+        left: 50%;
+        transform: translateX(-50%); /* Centra horizontalmente */
+        font-size: 24px; /* Ajusta el tamaño del texto */
         text-align: center;
-        margin-top: 40px;
     }
 }
