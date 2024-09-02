@@ -171,11 +171,6 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     body{
         padding-top: 20px ;
     }
-    .contenerdorCompleto{
-        grid-template-columns: 1fr;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
     h1{
         font-size: 66px; /* Ajusta el tamaño del texto en móviles */
         margin-left: 0 ;
@@ -203,7 +198,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         align-items: center;
     }
     .circulo {
-        width: 90%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
+        width: 120%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
         max-width: 300px;/* Aumenta el ancho del círculo para que desborde los bordes */
         height: 95vh; /* Mantiene la proporción original */
         margin: 0 auto; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
@@ -213,7 +208,6 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         overflow: hidden; /* Oculta cualquier contenido que desborde */
         border-radius: 50%; 
     }
-
 
     #quixoLineas {
         display: flex;
@@ -254,11 +248,11 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         text-align: center;
         left: 50%;
         transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
-        top:65%;
+        top:75%;
     }
 }
 
-@media (min-width: 430px) and (max-width: 926px)  {
+@media (min-width: 390px) and (max-width: 844px) {
     body {
         padding-top: 25px;
     }
@@ -337,6 +331,71 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 /*}*/
 
 
+
+
+@media (min-width: 430px) and (max-width: 932px) {
+    body {
+        padding-top: 25px;
+    }
+
+    h1 {
+        position: absolute;
+        top: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 5vw; /* Ajuste relativo al ancho de la pantalla */
+    }
+
+    #p1 {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 3.5vw;
+        text-align: center;
+        width: 80%;
+    }
+
+    .logo-container {
+        position: absolute;
+        top: 2%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        align-items: center;
+    }
+
+    .circulo {
+        position: absolute;
+        top: 108%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 400px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    #botonEmpezar {
+        position: absolute;
+        top: 155%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        padding: 20px;
+        font-size: 20px;
+    }
+
+    #estadoJuego {
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 24px;
+        text-align: center;
+    }
+
+}
 /*pantallas pequeñas*/
 
 /*body .logo-container, body .circulo, body #botonEmpezar, body #estadoJuego {
