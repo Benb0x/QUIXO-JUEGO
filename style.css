@@ -304,7 +304,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
     #botonEmpezar {
         position: absolute;
-        top: 155%; /* Ajusta la posición vertical del botón */
+        top: 145%; /* Ajusta la posición vertical del botón */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
         width: 60%; /* Ajusta el ancho del botón */
@@ -314,7 +314,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
     #estadoJuego {
         position: absolute;
-        top: 60%; /* Ajusta la posición vertical del texto */
+        top: 48%; /* Ajusta la posición vertical del texto */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
         font-size: 24px; /* Ajusta el tamaño del texto */
