@@ -198,7 +198,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         align-items: center;
     }
     .circulo {
-        width: 120%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
+        width: 150%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
         max-width: 300px;/* Aumenta el ancho del círculo para que desborde los bordes */
         height: 95vh; /* Mantiene la proporción original */
         margin: 0 auto; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
@@ -207,6 +207,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         align-items: center;
         overflow: hidden; /* Oculta cualquier contenido que desborde */
         border-radius: 50%; 
+        position: relative;
     }
 
     #quixoLineas {
@@ -263,7 +264,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 8%; /* Ajusta este valor según necesites */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        font-size:  6vw; /* Tamaño adecuado para pantallas grandes */
+        font-size:  15vw; /* Tamaño adecuado para pantallas grandes */
     }
 
     #p1 {
