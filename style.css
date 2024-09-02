@@ -304,7 +304,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
     #botonEmpezar {
         position: absolute;
-        top: 135%; /* Ajusta la posición vertical del botón */
+        top: 155%; /* Ajusta la posición vertical del botón */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
         width: 60%; /* Ajusta el ancho del botón */
