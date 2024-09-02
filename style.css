@@ -255,7 +255,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 }
 
 
-@media (min-width: 430px) and (max-width: 932px) {
+@media (min-width: 933px) {
     body {
         padding-top: 25px;
     }
@@ -265,7 +265,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 8%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 5vw; /* Ajuste relativo al ancho de la pantalla */
+        font-size: 50px; /* Ajuste según la pantalla */
     }
 
     #p1 {
@@ -273,7 +273,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 30%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 3.5vw;
+        font-size: 20px;
         text-align: center;
         width: 80%;
     }
@@ -293,7 +293,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         left: 50%;
         transform: translate(-50%, -50%);
         width: 80%;
-        max-width: 400px;
+        max-width: 500px; /* Ajusta el tamaño del círculo */
         height: auto;
         margin: 0 auto;
     }
@@ -316,8 +316,6 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         font-size: 24px;
         text-align: center;
     }
-
-
 }
 
 /*pantallas pequeñas*/
