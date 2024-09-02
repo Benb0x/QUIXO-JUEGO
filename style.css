@@ -264,7 +264,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 8%; /* Ajusta este valor según necesites */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        font-size:  15vw; /* Tamaño adecuado para pantallas grandes */
+        font-size:  8vw; /* Tamaño adecuado para pantallas grandes */
     }
 
     #p1 {
