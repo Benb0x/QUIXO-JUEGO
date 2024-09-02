@@ -332,7 +332,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
 
 
-/////////////////////////////////////////////////////////////////////
+
 @media (min-width: 430px) and (max-width: 932px) {
     body {
         padding-top: 25px;
