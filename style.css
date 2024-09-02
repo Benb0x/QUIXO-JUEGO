@@ -258,7 +258,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     }
 }
 
-@media (min-width: 390px) and (max-width: 844px) {
+@media (min-width: 430px) and (max-width: 926px)  {
     body {
         padding-top: 25px;
     }
@@ -269,7 +269,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 8%; /* Ajusta este valor según necesites */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        font-size: 50px; /* Tamaño adecuado para pantallas grandes */
+        font-size:  6vw; /* Tamaño adecuado para pantallas grandes */
     }
 
     #p1 {
@@ -277,7 +277,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 30%; /* Ajusta la posición vertical */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        font-size: 20px; /* Ajusta el tamaño del texto */
+        font-size: 4vw; /* Ajusta el tamaño del texto */
         text-align: center;
         width: 80%; /* Asegura que el texto no sea demasiado ancho */
 
@@ -314,9 +314,9 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 155%; /* Ajusta la posición vertical del botón */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        width: 60%; /* Ajusta el ancho del botón */
-        padding: 20px; /* Aumenta el padding para pantallas grandes */
-        font-size: 20px; /* Ajusta el tamaño del texto del botón */
+        width: 80%; /* Ajusta el ancho del botón */
+        padding: 15px; /* Aumenta el padding para pantallas grandes */
+        font-size: 5vw; /* Ajusta el tamaño del texto del botón */
     }
 
     #estadoJuego {
@@ -324,7 +324,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 48%; /* Ajusta la posición vertical del texto */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        font-size: 24px; /* Ajusta el tamaño del texto */
+        font-size: 4vw; /* Ajusta el tamaño del texto */
         text-align: center;
     }
 }
