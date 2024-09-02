@@ -253,6 +253,36 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top:75%;
     }
 }
+@media(min-width: 769px) and (max-width: 1200px) {
+    .logo-container {
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .logo-image {
+        width: 150px;
+    }
+
+    h1 {
+        font-size: 6vw;
+    }
+
+    #p1 {
+        font-size: 3vw;
+        margin: 10px 30px;
+    }
+
+    .circulo {
+        width: 350px;
+        height: 350px;
+    }
+
+    #botonEmpezar {
+        padding: 12px 25px;
+        font-size: 18px;
+    }
+}
 
 
 @media (min-width: 933px) {
