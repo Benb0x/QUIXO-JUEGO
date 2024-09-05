@@ -36,20 +36,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_3 (1).mp3',
                 'sounds/sounds_4 (1).mp3',
                 'sounds/sounds_error (1).wav',
-                'sounds/win.ogg' // Asegúrate de que la ruta al archivo sea correcta
+                'sounds/win.ogg'
             ];
+        
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
+                    audio.preload = 'auto';  // Asegura que el archivo de audio se cargue automáticamente
                     audio.addEventListener('canplaythrough', () => {
-                        this.sonidosBoton[indice] = audio;
+                        this.sonidosBoton[indice] = audio;  // Guarda el sonido en un array o estructura
                         resolve();
                     }, { once: true });
                     audio.addEventListener('error', () => reject(new Error(`Failed to load sound: ${sonido}`)));
                 });
             });
+        
             try {
-                await Promise.all(promesas);
+                await Promise.all(promesas);  // Espera a que se carguen todos los sonidos
+                console.log("Todos los sonidos se han cargado correctamente");
             } catch (error) {
                 console.error("Error loading sounds:", error);
             }
