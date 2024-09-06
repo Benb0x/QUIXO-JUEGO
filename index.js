@@ -31,31 +31,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         async cargarSonidos() {
             const sonidos = [
-                'sounds/sounds_1.mp3',
-                'sounds/sounds_2.mp3',
-                'sounds/sounds_3.mp3',
-                'sounds/sounds_4.mp3',
-                'sounds/sounds_error.wav',
-                'sounds/win.ogg'
+                'sounds/sounds_1 (1).mp3',
+                'sounds/sounds_2 (1).mp3',
+                'sounds/sounds_3 (1).mp3',
+                'sounds/sounds_4 (1).mp3',
+                'sounds/sounds_error (1).wav',
+                'sounds/win.ogg' // Asegúrate de que la ruta al archivo sea correcta
             ];
-        
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
-                    audio.preload = 'auto'; // Pre-carga automática
                     audio.addEventListener('canplaythrough', () => {
-                        this.sonidosBoton[indice] = audio;  // Guarda el sonido en el array
+                        this.sonidosBoton[indice] = audio;
                         resolve();
                     }, { once: true });
-                    audio.addEventListener('error', () => reject(new Error(`Error al cargar el sonido: ${sonido}`)));
+                    audio.addEventListener('error', () => reject(new Error(`Failed to load sound: ${sonido}`)));
                 });
             });
-        
             try {
-                await Promise.all(promesas);  // Espera a que todos los sonidos se carguen
-                console.log("Todos los sonidos se han cargado correctamente.");
+                await Promise.all(promesas);
             } catch (error) {
-                console.error("Error al cargar los sonidos:", error);
+                console.error("Error loading sounds:", error);
             }
         }
 
@@ -101,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         validarColorElegido(indice) {
             if (this.secuencia[this.posicionUsuario] === indice) {
-                this.sonidosBoton[indice].play();   
                 clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
                 this.alternarEstiloBoton(this.botones[indice], true);
                 if (this.sonidosBoton[indice]) {
@@ -127,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } else {
                 setTimeout(() => this.perderJuego(), 250);
-                
             }
         }
 
@@ -176,7 +170,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-    
+        perderJuego() {
+            clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
+            this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
+            this.display.estadoJuego.style.color = 'red';
+            this.display.botonEmpezar.disabled = false;
+            this.botonesBloqueados = true;
+            this.resetJuego();
+            
+            // Reproducir el sonido de error
+            if (this.sonidosBoton[4]) {  // Asumiendo que el sonido de error es el índice 4
+                this.sonidosBoton[4].play();
+            }
+        }
+
         ganarJuego() {
             clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
             this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S &nbsp;&nbsp;&nbsp; G A N A S T E!';
