@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
 
     botonEmpezar.addEventListener('click', function() {
-        audio.preload = 'auto';
         new Quixo();
     });
 
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_3 (1).mp3',
                 'sounds/sounds_4 (1).mp3',
                 'sounds/sounds_error (1).wav',
-                'sounds/win.ogg' // Asegúrate de que la ruta al archivo sea correcta
+                'sounds/win.ogg' 
             ];
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
@@ -99,9 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.secuencia[this.posicionUsuario] === indice) {
                 clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
                 this.alternarEstiloBoton(this.botones[indice], true);
+        
+                // Reproducir el sonido con manejo de errores
                 if (this.sonidosBoton[indice]) {
-                    this.sonidosBoton[indice].play();
+                    this.sonidosBoton[indice].play().catch(error => {
+                        console.error('Error al reproducir el audio:', error);
+                    });
                 }
+        
                 setTimeout(() => {
                     this.alternarEstiloBoton(this.botones[indice], false);
                 }, this.velocidad / 2);
@@ -124,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => this.perderJuego(), 250);
             }
         }
-
+        
         mostrarSecuencia() {
             this.botonesBloqueados = true;
             let indiceSecuencia = 0;
