@@ -28,6 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
             this.iniciar();
         }
 
+        iniciar() {
+            this.cargarSonidos();
+
+            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
+            this.botones.forEach(boton => {
+                boton.style.fill = boton.getAttribute('data-color-inactivo');
+                boton.addEventListener('click', (event) => {
+                    if (!this.botonesBloqueados) {
+                        const indice = this.botones.indexOf(event.currentTarget);
+                        this.validarColorElegido(indice);
+                    }
+                });
+            });
+        }
+        
         async cargarSonidos() {
             const sonidos = [
                 'sounds/sounds_1 (1).mp3',
@@ -54,20 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        iniciar() {
-            this.cargarSonidos();
-
-            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
-            this.botones.forEach(boton => {
-                boton.style.fill = boton.getAttribute('data-color-inactivo');
-                boton.addEventListener('click', (event) => {
-                    if (!this.botonesBloqueados) {
-                        const indice = this.botones.indexOf(event.currentTarget);
-                        this.validarColorElegido(indice);
-                    }
-                });
-            });
-        }
+        
 
         iniciarJuego() {
             this.display.botonEmpezar.disabled = true;
@@ -128,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => this.perderJuego(), 250);
             }
         }
-        
+
         mostrarSecuencia() {
             this.botonesBloqueados = true;
             let indiceSecuencia = 0;
