@@ -98,29 +98,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         actualizarRonda(valor) {
             this.rondaActual = valor;
-            //this.display.ronda.textContent = `Ronda ${this.rondaActual}`;
         }
 
         crearSecuencia() {
-            return Array.from({length: this.rondasTotales}, () => Math.floor(Math.random() * this.botones.length));
+            return Array.from({ length: this.rondasTotales }, () => Math.floor(Math.random() * this.botones.length));
         }
 
         validarColorElegido(indice) {
             if (this.secuencia[this.posicionUsuario] === indice) {
-                clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
+                clearTimeout(this.inactividadTimeout);  // Limpiar el temporizador de inactividad
                 this.alternarEstiloBoton(this.botones[indice], true);
-        
-                // Reproducir el sonido con manejo de errores
-                if (this.sonidosBoton[indice]) {
-                    this.sonidosBoton[indice].play().catch(error => {
-                        console.error('Error al reproducir el audio:', error);
-                    });
-                }
-        
+
+                // Reproducir el sonido
+                this.reproducirSonido(this.sonidosBoton[indice]);
+
                 setTimeout(() => {
                     this.alternarEstiloBoton(this.botones[indice], false);
                 }, this.velocidad / 2);
-        
+
                 if (this.rondaActual === this.posicionUsuario) {
                     this.posicionUsuario = 0;
                     this.rondaActual++;
@@ -133,10 +128,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     this.posicionUsuario++;
                     this.display.estadoJuego.textContent = `Correcto! Sigue así.`;
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Establecer el temporizador de inactividad
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
             } else {
                 setTimeout(() => this.perderJuego(), 250);
+            }
+        }
+
+        reproducirSonido(audio) {
+            if (this.audioContext) {
+                const source = this.audioContext.createMediaElementSource(audio);
+                source.connect(this.audioContext.destination);
+                audio.play().catch(error => console.error('Error al reproducir el sonido:', error));
             }
         }
 
