@@ -3,9 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const estadoJuego = document.getElementById("estadoJuego");
     const ronda = document.getElementById("ronda");
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
-
-    botonEmpezar.addEventListener('click', function() {
-        new Quixo();
+    
+    botonEmpezar.addEventListener('touchstart', async () => {
+        await this.cargarSonidos();
+        this.iniciarJuego();
+    });
+    
+    // Mantenemos también el evento click para escritorio
+    botonEmpezar.addEventListener('click', async () => {
+        await this.cargarSonidos();
+        this.iniciarJuego();
     });
 
     class Quixo {
