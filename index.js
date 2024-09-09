@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_2 (1).mp3',
                 'sounds/sounds_3 (1).mp3',
                 'sounds/sounds_4 (1).mp3',
-                'sounds/sounds_error (1).wav',
-                'sounds/win.ogg'
+                'sounds/sounds_error (1).mp3',
+                'sounds/win.mp3'
             ];
 
             const promesas = sonidos.map((sonido, indice) => {
