@@ -29,9 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         iniciar() {
-            this.cargarSonidos();
-
-            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
+            // Cargar sonidos solo después de que el usuario haga clic
+            this.display.botonEmpezar.addEventListener('click', async () => {
+                await this.cargarSonidos();  // Carga los sonidos después del clic
+                this.iniciarJuego();
+            });
+    
             this.botones.forEach(boton => {
                 boton.style.fill = boton.getAttribute('data-color-inactivo');
                 boton.addEventListener('click', (event) => {
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
-        
+    
         async cargarSonidos() {
             const sonidos = [
                 'sounds/sounds_1 (1).mp3',
@@ -50,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_3 (1).mp3',
                 'sounds/sounds_4 (1).mp3',
                 'sounds/sounds_error (1).wav',
-                'sounds/win.ogg' 
+                'sounds/win.ogg'
             ];
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
@@ -59,24 +62,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         this.sonidosBoton[indice] = audio;
                         resolve();
                     }, { once: true });
-                    audio.addEventListener('error', () => reject(new Error(`Failed to load sound: ${sonido}`)));
+                    audio.addEventListener('error', () => reject(new Error(`Error al cargar el sonido: ${sonido}`)));
                 });
             });
             try {
                 await Promise.all(promesas);
+                console.log('Todos los sonidos se han cargado correctamente.');
             } catch (error) {
-                console.error("Error loading sounds:", error);
+                console.error('Error al cargar los sonidos:', error);
             }
         }
-
-        
-
+    
         iniciarJuego() {
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
             this.posicionUsuario = 0;
             this.secuencia = this.crearSecuencia();
-            this.resetEstadoJuego();  
+            this.resetEstadoJuego();
             this.mostrarSecuencia();
         }
 
