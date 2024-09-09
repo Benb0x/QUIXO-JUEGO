@@ -1,15 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const botonEmpezar = document.getElementById("botonEmpezar");
-    const estadoJuego = document.getElementById("estadoJuego");
-    const ronda = document.getElementById("ronda");
-    const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
-
-    botonEmpezar.addEventListener('click', function() {
-        new Quixo();
-    });
-
     class Quixo {
         constructor() {
+            this.audioContext = null;  // Contexto de audio
+            const botonEmpezar = document.getElementById("botonEmpezar");
+            const estadoJuego = document.getElementById("estadoJuego");
+            const ronda = document.getElementById("ronda");
+            const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
+
             this.rondaActual = 0;
             this.posicionUsuario = 0;
             this.rondasTotales = 15;
@@ -18,31 +15,41 @@ document.addEventListener('DOMContentLoaded', function() {
             this.botonesBloqueados = true;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
-            this.inactividadTimeout = null; // Añadir un temporizador de inactividad
-            this.cargarSonidos();
+            this.inactividadTimeout = null;
+
             this.display = {
                 botonEmpezar,
                 ronda,
                 estadoJuego
             };
-            this.iniciar();
+
+            this.iniciar();  // Iniciar el juego
         }
 
         iniciar() {
+            // Mostrar alerta o modal que solicite al usuario aceptar el audio
+            const aceptarAudio = confirm("Para una mejor experiencia, por favor acepta el audio.");
+            
+            if (aceptarAudio) {
+                this.habilitarSonidos();
+            }
+        }
+
+        habilitarSonidos() {
+            // Crear el contexto de audio en el primer clic/aceptación
+            if (!this.audioContext) {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Cargar los sonidos solo después de que el usuario haya aceptado
             this.cargarSonidos();
 
-            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
-            this.botones.forEach(boton => {
-                boton.style.fill = boton.getAttribute('data-color-inactivo');
-                boton.addEventListener('click', (event) => {
-                    if (!this.botonesBloqueados) {
-                        const indice = this.botones.indexOf(event.currentTarget);
-                        this.validarColorElegido(indice);
-                    }
-                });
+            // Iniciar el juego al hacer clic en el botón de empezar
+            this.display.botonEmpezar.addEventListener('click', () => {
+                this.iniciarJuego();
             });
         }
-        
+
         async cargarSonidos() {
             const sonidos = [
                 'sounds/sounds_1 (1).mp3',
@@ -50,33 +57,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_3 (1).mp3',
                 'sounds/sounds_4 (1).mp3',
                 'sounds/sounds_error (1).wav',
-                'sounds/win.ogg' 
+                'sounds/win.ogg'
             ];
+
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
+                    audio.crossOrigin = 'anonymous';  // Asegúrate de que los recursos sean accesibles
                     audio.addEventListener('canplaythrough', () => {
                         this.sonidosBoton[indice] = audio;
                         resolve();
                     }, { once: true });
-                    audio.addEventListener('error', () => reject(new Error(`Failed to load sound: ${sonido}`)));
+                    audio.addEventListener('error', () => reject(new Error(`Error al cargar el sonido: ${sonido}`)));
                 });
             });
+
             try {
                 await Promise.all(promesas);
+                console.log('Todos los sonidos se han cargado correctamente.');
             } catch (error) {
-                console.error("Error loading sounds:", error);
+                console.error('Error al cargar los sonidos:', error);
             }
         }
-
-        
 
         iniciarJuego() {
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
             this.posicionUsuario = 0;
             this.secuencia = this.crearSecuencia();
-            this.resetEstadoJuego();  
+            this.resetEstadoJuego();
             this.mostrarSecuencia();
         }
 
