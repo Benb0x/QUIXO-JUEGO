@@ -48,12 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         async cargarSonidos() {
             const sonidos = [
-                'sounds/sounds_1 (1).mp3',
-                'sounds/sounds_2 (1).mp3',
-                'sounds/sounds_3 (1).mp3',
-                'sounds/sounds_4 (1).mp3',
-                'sounds/sounds_error (1).mp3',
-                'sounds/win.mp3'
+                'sounds/sounds_1 (1).m4a',
+                'sounds/sounds_2 (1).m4a',
+                'sounds/sounds_3 (1).m4a',
+                'sounds/sounds_4 (1).m4a',
+                'sounds/sounds_error (1).m4a',
+                'sounds/win.m4a'
             ];
 
             const promesas = sonidos.map((sonido, indice) => {
