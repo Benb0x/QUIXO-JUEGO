@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const botonEmpezar = document.getElementById("botonEmpezar");
+    const estadoJuego = document.getElementById("estadoJuego");
+    const ronda = document.getElementById("ronda");
+    const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
+
+    botonEmpezar.addEventListener('click', function() {
+        new Quixo();
+    });
+
     class Quixo {
         constructor() {
-            this.audioContext = null;  // Agregamos un contexto de audio
-            const botonEmpezar = document.getElementById("botonEmpezar");
-            const estadoJuego = document.getElementById("estadoJuego");
-            const ronda = document.getElementById("ronda");
-            const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
-
             this.rondaActual = 0;
             this.posicionUsuario = 0;
             this.rondasTotales = 15;
@@ -15,34 +18,20 @@ document.addEventListener('DOMContentLoaded', function() {
             this.botonesBloqueados = true;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
-            this.inactividadTimeout = null;
-
+            this.inactividadTimeout = null; // Añadir un temporizador de inactividad
+            this.cargarSonidos();
             this.display = {
                 botonEmpezar,
                 ronda,
                 estadoJuego
             };
-
-            this.iniciar();  // Iniciar el juego
+            this.iniciar();
         }
 
         iniciar() {
-            // Activar el contexto de audio en la primera interacción del usuario
-            this.display.botonEmpezar.addEventListener('touchstart', () => {
-                if (!this.audioContext) {
-                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                this.iniciarJuego();
-            }, { once: true });
+            this.cargarSonidos();
 
-            this.display.botonEmpezar.addEventListener('click', () => {
-                if (!this.audioContext) {
-                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                this.iniciarJuego();
-            }, { once: true });
-
-            // Configuración de los botones interactivos
+            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
             this.botones.forEach(boton => {
                 boton.style.fill = boton.getAttribute('data-color-inactivo');
                 boton.addEventListener('click', (event) => {
@@ -53,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
-
+        
         async cargarSonidos() {
             const sonidos = [
                 'sounds/sounds_1 (1).mp3',
@@ -61,35 +50,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_3 (1).mp3',
                 'sounds/sounds_4 (1).mp3',
                 'sounds/sounds_error (1).wav',
-                'sounds/win.ogg'
+                'sounds/win.ogg' 
             ];
-
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
-                    audio.crossOrigin = 'anonymous';  // Asegúrate de que el recurso sea accesible
                     audio.addEventListener('canplaythrough', () => {
                         this.sonidosBoton[indice] = audio;
                         resolve();
                     }, { once: true });
-                    audio.addEventListener('error', () => reject(new Error(`Error al cargar el sonido: ${sonido}`)));
+                    audio.addEventListener('error', () => reject(new Error(`Failed to load sound: ${sonido}`)));
                 });
             });
-
             try {
                 await Promise.all(promesas);
-                console.log('Todos los sonidos se han cargado correctamente.');
             } catch (error) {
-                console.error('Error al cargar los sonidos:', error);
+                console.error("Error loading sounds:", error);
             }
         }
+
+        
 
         iniciarJuego() {
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
             this.posicionUsuario = 0;
             this.secuencia = this.crearSecuencia();
-            this.resetEstadoJuego();
+            this.resetEstadoJuego();  
             this.mostrarSecuencia();
         }
 
@@ -102,28 +89,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         actualizarRonda(valor) {
             this.rondaActual = valor;
+            //this.display.ronda.textContent = `Ronda ${this.rondaActual}`;
         }
 
         crearSecuencia() {
-            return Array.from({ length: this.rondasTotales }, () => Math.floor(Math.random() * this.botones.length));
+            return Array.from({length: this.rondasTotales}, () => Math.floor(Math.random() * this.botones.length));
         }
 
         validarColorElegido(indice) {
             if (this.secuencia[this.posicionUsuario] === indice) {
-                clearTimeout(this.inactividadTimeout);  // Limpiar el temporizador de inactividad
+                clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
                 this.alternarEstiloBoton(this.botones[indice], true);
-
-                // Aquí conectamos el audioContext para reproducir el sonido
-                const audioSource = this.audioContext.createMediaElementSource(this.sonidosBoton[indice]);
-                audioSource.connect(this.audioContext.destination);
-                this.sonidosBoton[indice].play().catch(error => {
-                    console.error('Error al reproducir el audio:', error);
-                });
-
+        
+                // Reproducir el sonido con manejo de errores
+                if (this.sonidosBoton[indice]) {
+                    this.sonidosBoton[indice].play().catch(error => {
+                        console.error('Error al reproducir el audio:', error);
+                    });
+                }
+        
                 setTimeout(() => {
                     this.alternarEstiloBoton(this.botones[indice], false);
                 }, this.velocidad / 2);
-
+        
                 if (this.rondaActual === this.posicionUsuario) {
                     this.posicionUsuario = 0;
                     this.rondaActual++;
@@ -136,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     this.posicionUsuario++;
                     this.display.estadoJuego.textContent = `Correcto! Sigue así.`;
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Establecer el temporizador de inactividad
                 }
             } else {
                 setTimeout(() => this.perderJuego(), 250);
