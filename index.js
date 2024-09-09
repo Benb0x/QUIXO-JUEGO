@@ -1,12 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const botonEmpezar = document.getElementById("botonEmpezar");
     const estadoJuego = document.getElementById("estadoJuego");
     const ronda = document.getElementById("ronda");
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
-
-    botonEmpezar.addEventListener('click', function() {
-        new Quixo();
-    });
 
     class Quixo {
         constructor() {
@@ -19,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
-            this.secuenciaInterval = null; // Para manejar el intervalo de la secuencia
-            this.secuenciaActiva = false; // Para asegurar que no haya secuencias activas
+            this.secuenciaInterval = null;
+            this.secuenciaActiva = false;
 
             this.display = {
                 botonEmpezar,
@@ -32,33 +28,20 @@ document.addEventListener('DOMContentLoaded', function() {
             this.iniciar();
         }
 
-        iniciar() {
-            // Configurar los botones y su iluminación
-            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
-            this.botones.forEach(boton => {
-                boton.style.fill = boton.getAttribute('data-color-inactivo');
-                boton.addEventListener('click', (event) => {
-                    if (!this.botonesBloqueados) {
-                        const indice = this.botones.indexOf(event.currentTarget);
-                        this.validarColorElegido(indice);
-                    }
-                });
-            });
-        }
-
         async cargarSonidos() {
             const sonidos = [
-                'sounds/sounds_1 (1).m4a',
-                'sounds/sounds_2 (1).m4a',
-                'sounds/sounds_3 (1).m4a',
-                'sounds/sounds_4 (1).m4a',
-                'sounds/sounds_error (1).m4a',
+                'sounds/sounds_1.m4a',
+                'sounds/sounds_2.m4a',
+                'sounds/sounds_3.m4a',
+                'sounds/sounds_4.m4a',
+                'sounds/sounds_error.m4a',
                 'sounds/win.m4a'
             ];
 
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
+                    audio.crossOrigin = 'anonymous';  // Para evitar problemas de CORS si los archivos están en otro dominio
                     audio.addEventListener('canplaythrough', () => {
                         this.sonidosBoton[indice] = audio;
                         resolve();
@@ -75,8 +58,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        iniciar() {
+            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
+            this.botones.forEach(boton => {
+                // Establecemos los colores inactivos al iniciar el juego
+                boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
+
+                // Configuramos la interacción del clic en los botones
+                boton.addEventListener('click', (event) => {
+                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
+                        const indice = this.botones.indexOf(event.currentTarget);
+                        this.validarColorElegido(indice);
+                    }
+                });
+            });
+        }
+
         iniciarJuego() {
-            this.limpiarEstado(); // Limpieza completa del estado antes de reiniciar
+            this.limpiarEstado();
 
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
@@ -87,12 +86,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         limpiarEstado() {
-            // Limpiar todos los temporizadores e intervalos
             clearTimeout(this.inactividadTimeout);
             clearInterval(this.secuenciaInterval);
-            this.secuenciaActiva = false; // Marcar que no hay ninguna secuencia activa
-
-            // Resetear los botones a su estado inicial
+            this.secuenciaActiva = false;
             this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
             this.botonesBloqueados = true;
         }
@@ -113,19 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         validarColorElegido(indice) {
-            if (this.secuenciaActiva) {
-                return; // Si hay una secuencia activa, no se permite la interacción
-            }
+            if (this.secuenciaActiva) return;
 
             if (this.secuencia[this.posicionUsuario] === indice) {
                 clearTimeout(this.inactividadTimeout);
                 this.alternarEstiloBoton(this.botones[indice], true);
 
-                if (this.sonidosBoton[indice]) {
-                    this.sonidosBoton[indice].play().catch(error => {
-                        console.error('Error al reproducir el audio:', error);
-                    });
-                }
+                this.reproducirSonido(indice);
 
                 setTimeout(() => {
                     this.alternarEstiloBoton(this.botones[indice], false);
@@ -142,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } else {
                     this.posicionUsuario++;
-                    this.display.estadoJuego.textContent = `Correcto! Sigue así.`;
+                    this.display.estadoJuego.textContent = 'Correcto! Sigue así.';
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
             } else {
@@ -154,27 +144,22 @@ document.addEventListener('DOMContentLoaded', function() {
             this.botonesBloqueados = true;
             let indiceSecuencia = 0;
 
-            // Limpiar cualquier intervalo previo para evitar superposiciones
             clearInterval(this.secuenciaInterval);
 
-            // Marcar que hay una secuencia activa
             this.secuenciaActiva = true;
 
-            // Mostrar la secuencia paso a paso
             this.secuenciaInterval = setInterval(() => {
                 if (indiceSecuencia > 0) {
                     this.alternarEstiloBoton(this.botones[this.secuencia[indiceSecuencia - 1]], false);
                 }
                 if (indiceSecuencia < this.rondaActual + 1) {
                     this.alternarEstiloBoton(this.botones[this.secuencia[indiceSecuencia]], true);
-                    if (this.sonidosBoton[this.secuencia[indiceSecuencia]]) {
-                        this.sonidosBoton[this.secuencia[indiceSecuencia]].play();
-                    }
+                    this.reproducirSonido(this.secuencia[indiceSecuencia]);
                     indiceSecuencia++;
                 } else {
                     clearInterval(this.secuenciaInterval);
-                    this.secuenciaActiva = false; // Marcar que la secuencia ha terminado
-                    this.botonesBloqueados = false; // Liberar los botones después de la secuencia
+                    this.secuenciaActiva = false;
+                    this.botonesBloqueados = false;
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
             }, this.velocidad);
@@ -182,71 +167,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
         alternarEstiloBoton(boton, activar) {
             if (activar) {
-                boton.classList.add('boton-activo');
-                boton.style.fill = boton.getAttribute('data-color-activo');
+                boton.setAttribute('fill', boton.getAttribute('data-color-activo'));
             } else {
-                boton.classList.remove('boton-activo');
-                boton.style.fill = boton.getAttribute('data-color-inactivo');
+                boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
+            }
+        }
+
+        reproducirSonido(indice) {
+            const audio = this.sonidosBoton[indice];
+            if (audio) {
+                audio.play().catch(error => {
+                    console.error('Error al reproducir el audio:', error);
+                });
             }
         }
 
         perderJuego() {
-            // Limpiar cualquier temporizador o intervalo activo
             this.limpiarEstado();
-            
             this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
             this.display.estadoJuego.style.color = 'red';
             this.display.botonEmpezar.disabled = false;
-            this.botonesBloqueados = true;
 
-            if (this.sonidosBoton[4]) {
-                this.sonidosBoton[4].play();
-            }
+            this.reproducirSonido(4); // Sonido de error
         }
 
         ganarJuego() {
-            clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
+            this.limpiarEstado();
             this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S &nbsp;&nbsp;&nbsp; G A N A S T E!';
             this.display.estadoJuego.style.color = 'green';
             this.display.estadoJuego.classList.add('ganador');
-            this.display.estadoJuego.style.marginLeft = '195px'; // Ajusta el valor según lo necesites
+            this.display.estadoJuego.style.marginLeft = '195px';
             this.display.ronda.style.display = 'none';
             this.botonesBloqueados = true;
-        
-            // Reproduce el sonido de victoria
-            if (this.sonidosBoton[5]) {  // Asumiendo que el sonido de victoria es el índice 5
-                this.sonidosBoton[5].play();
-            }
-        
-            // Cambia el color de los elementos especificados
-            const nuevoColor = '#5CE261'; // Dorado, ajusta según sea necesario
-            const elementos = [cascoS, cascoI, ojos, bigote];
-        
-            elementos.forEach((elemento, index) => {
-                setTimeout(() => {
-                    elemento.style.fill = nuevoColor;
-                    elemento.classList.add('animacion-ganador');
-                }, index * 100); // Ajusta el tiempo entre cada animación
-            });
-        
-            setTimeout(() => {
-                elementos.reverse().forEach((elemento, index) => {
-                    setTimeout(() => {
-                        elemento.style.fill = '';
-                        elemento.classList.add('animacion-ganador');
-                    }, index * 100); // Ajusta el tiempo entre cada animación
-                });
-            }, elementos.length * 100); // Espera a que termine la primera secuencia
-        
-            setTimeout(() => {
-                this.display.botonEmpezar.disabled = false;
-                this.resetJuego();
-            }, (elementos.length * 2 * 100) + 1000); // Espera a que termine la animación para habilitar el botón
-        }
-        
 
-        resetJuego() {
-            this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
+            this.reproducirSonido(5); // Sonido de victoria
         }
     }
 
