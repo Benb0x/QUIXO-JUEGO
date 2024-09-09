@@ -1,22 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const botonEmpezar = document.getElementById("botonEmpezar");
-    const estadoJuego = document.getElementById("estadoJuego");
-    const ronda = document.getElementById("ronda");
-    const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
-    
-    botonEmpezar.addEventListener('touchstart', async () => {
-        await this.cargarSonidos();
-        this.iniciarJuego();
-    });
-    
-    // Mantenemos también el evento click para escritorio
-    botonEmpezar.addEventListener('click', async () => {
-        await this.cargarSonidos();
-        this.iniciarJuego();
-    });
-
     class Quixo {
         constructor() {
+            const botonEmpezar = document.getElementById("botonEmpezar");
+            const estadoJuego = document.getElementById("estadoJuego");
+            const ronda = document.getElementById("ronda");
+            const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
+
             this.rondaActual = 0;
             this.posicionUsuario = 0;
             this.rondasTotales = 15;
@@ -25,23 +14,30 @@ document.addEventListener('DOMContentLoaded', function() {
             this.botonesBloqueados = true;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
-            this.inactividadTimeout = null; // Añadir un temporizador de inactividad
-            this.cargarSonidos();
+            this.inactividadTimeout = null;
+
             this.display = {
                 botonEmpezar,
                 ronda,
                 estadoJuego
             };
-            this.iniciar();
+
+            this.iniciar();  // Iniciar el juego
         }
 
         iniciar() {
-            // Cargar sonidos solo después de que el usuario haga clic
-            this.display.botonEmpezar.addEventListener('click', async () => {
-                await this.cargarSonidos();  // Carga los sonidos después del clic
+            // Cargar sonidos solo después de que el usuario haga clic o toque
+            this.display.botonEmpezar.addEventListener('touchstart', async () => {
+                await this.cargarSonidos();  // Cargar los sonidos en iPhone
                 this.iniciarJuego();
-            });
-    
+            }, { once: true });
+
+            this.display.botonEmpezar.addEventListener('click', async () => {
+                await this.cargarSonidos();  // Cargar los sonidos en otras plataformas
+                this.iniciarJuego();
+            }, { once: true });
+
+            // Configuración de los botones interactivos
             this.botones.forEach(boton => {
                 boton.style.fill = boton.getAttribute('data-color-inactivo');
                 boton.addEventListener('click', (event) => {
@@ -52,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
-    
+
         async cargarSonidos() {
             const sonidos = [
                 'sounds/sounds_1 (1).mp3',
@@ -62,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'sounds/sounds_error (1).wav',
                 'sounds/win.ogg'
             ];
+
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
@@ -72,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     audio.addEventListener('error', () => reject(new Error(`Error al cargar el sonido: ${sonido}`)));
                 });
             });
+
             try {
                 await Promise.all(promesas);
                 console.log('Todos los sonidos se han cargado correctamente.');
@@ -79,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error al cargar los sonidos:', error);
             }
         }
-    
+
         iniciarJuego() {
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
@@ -98,29 +96,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         actualizarRonda(valor) {
             this.rondaActual = valor;
-            //this.display.ronda.textContent = `Ronda ${this.rondaActual}`;
         }
 
         crearSecuencia() {
-            return Array.from({length: this.rondasTotales}, () => Math.floor(Math.random() * this.botones.length));
+            return Array.from({ length: this.rondasTotales }, () => Math.floor(Math.random() * this.botones.length));
         }
 
         validarColorElegido(indice) {
             if (this.secuencia[this.posicionUsuario] === indice) {
-                clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
+                clearTimeout(this.inactividadTimeout);  // Limpiar el temporizador de inactividad
                 this.alternarEstiloBoton(this.botones[indice], true);
-        
-                // Reproducir el sonido con manejo de errores
+
                 if (this.sonidosBoton[indice]) {
                     this.sonidosBoton[indice].play().catch(error => {
                         console.error('Error al reproducir el audio:', error);
                     });
                 }
-        
+
                 setTimeout(() => {
                     this.alternarEstiloBoton(this.botones[indice], false);
                 }, this.velocidad / 2);
-        
+
                 if (this.rondaActual === this.posicionUsuario) {
                     this.posicionUsuario = 0;
                     this.rondaActual++;
@@ -133,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     this.posicionUsuario++;
                     this.display.estadoJuego.textContent = `Correcto! Sigue así.`;
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Establecer el temporizador de inactividad
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
             } else {
                 setTimeout(() => this.perderJuego(), 250);
@@ -156,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     clearInterval(intervalo);
                     this.botonesBloqueados = false;
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Establecer el temporizador de inactividad después de mostrar la secuencia
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
             }, this.velocidad);
         }
@@ -172,29 +168,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         perderJuego() {
-            clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
+            clearTimeout(this.inactividadTimeout);
             this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
             this.display.estadoJuego.style.color = 'red';
             this.display.botonEmpezar.disabled = false;
             this.botonesBloqueados = true;
             this.resetJuego();
-            
-            // Reproducir el sonido de error
-            if (this.sonidosBoton[4]) {  // Asumiendo que el sonido de error es el índice 4
-                this.sonidosBoton[4].play();
-            }
-        }
 
-        perderJuego() {
-            clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
-            this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
-            this.display.estadoJuego.style.color = 'red';
-            this.display.botonEmpezar.disabled = false;
-            this.botonesBloqueados = true;
-            this.resetJuego();
-            
-            // Reproducir el sonido de error
-            if (this.sonidosBoton[4]) {  // Asumiendo que el sonido de error es el índice 4
+            if (this.sonidosBoton[4]) {
                 this.sonidosBoton[4].play();
             }
         }
@@ -202,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ganarJuego() {
             clearTimeout(this.inactividadTimeout); // Limpiar el temporizador de inactividad
             this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S &nbsp;&nbsp;&nbsp; G A N A S T E!';
-            this.display.estadoJuego.style.color = 'green';
+            this.display.estadoJuego.style.color = 'gold';
             this.display.estadoJuego.classList.add('ganador');
             this.display.estadoJuego.style.marginLeft = '195px'; // Ajusta el valor según lo necesites
             this.display.ronda.style.display = 'none';
@@ -214,14 +195,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         
             // Cambia el color de los elementos especificados
-            const nuevoColor = '#5CE261'; // Dorado, ajusta según sea necesario
+            const nuevoColor = '#FFD700'; // Dorado, ajusta según sea necesario
             const elementos = [cascoS, cascoI, ojos, bigote];
         
             elementos.forEach((elemento, index) => {
                 setTimeout(() => {
                     elemento.style.fill = nuevoColor;
                     elemento.classList.add('animacion-ganador');
-                }, index * 100); // Ajusta el tiempo entre cada animación
+                }, index * 250); // Ajusta el tiempo entre cada animación
             });
         
             setTimeout(() => {
@@ -238,12 +219,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.resetJuego();
             }, (elementos.length * 2 * 100) + 1000); // Espera a que termine la animación para habilitar el botón
         }
-        
-
         resetJuego() {
             this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
         }
-    }
 
+    }
     new Quixo();
 });
