@@ -30,12 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         async cargarSonidos() {
             const sonidos = [
-                'sounds/sounds_1.mp3',  // Cambié a .mp3 para asegurar compatibilidad
-                'sounds/sounds_2.mp3',
-                'sounds/sounds_3.mp3',
-                'sounds/sounds_4.mp3',
-                'sounds/sounds_error.mp3',
-                'sounds/win.mp3'
+                'sounds/sounds_1.m4a',
+                'sounds/sounds_2.m4a',
+                'sounds/sounds_3.m4a',
+                'sounds/sounds_4.m4a',
+                'sounds/sounds_error.m4a',
+                'sounds/win.m4a'
             ];
 
             const promesas = sonidos.map((sonido, indice) => {
@@ -59,7 +59,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         iniciar() {
-            this.display.botonEmpezar.addEventListener('click', this.iniciarJuego.bind(this));
+            this.display.botonEmpezar.addEventListener('click', () => {
+                // Reproducción de sonido de prueba para asegurarse de que el sonido se activa tras la interacción
+                const audioPrueba = new Audio('sounds/sounds_1.mp3');
+                audioPrueba.play().then(() => {
+                    console.log('Sonido de prueba reproduciéndose.');
+                }).catch(error => {
+                    console.error('Error al reproducir el audio de prueba:', error);
+                });
+
+                this.iniciarJuego();
+            });
+
             this.botones.forEach(boton => {
                 // Establecemos los colores inactivos al iniciar el juego
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
