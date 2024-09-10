@@ -30,12 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         async cargarSonidos() {
             const sonidos = [
-                'sounds/sounds_1.m4a',
-                'sounds/sounds_2.m4a',
-                'sounds/sounds_3.m4a',
-                'sounds/sounds_4.m4a',
-                'sounds/sounds_error.m4a',
-                'sounds/win.m4a'
+                'sounds/sounds_1.mp3',  // Cambié a .mp3 para asegurar compatibilidad
+                'sounds/sounds_2.mp3',
+                'sounds/sounds_3.mp3',
+                'sounds/sounds_4.mp3',
+                'sounds/sounds_error.mp3',
+                'sounds/win.mp3'
             ];
 
             const promesas = sonidos.map((sonido, indice) => {
@@ -176,7 +176,9 @@ document.addEventListener('DOMContentLoaded', function () {
         reproducirSonido(indice) {
             const audio = this.sonidosBoton[indice];
             if (audio) {
-                audio.play().catch(error => {
+                audio.play().then(() => {
+                    console.log(`Reproduciendo sonido: ${indice}`);
+                }).catch(error => {
                     console.error('Error al reproducir el audio:', error);
                 });
             }
