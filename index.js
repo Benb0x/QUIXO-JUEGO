@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botones.forEach(boton => {
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
 
-                // Eventos para asegurar interacción correcta en iOS
+                // Usamos 'touchstart' para mejorar la compatibilidad con iOS
                 boton.addEventListener('touchstart', (event) => {
                     if (this.secuenciaCompletada && !this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
@@ -153,7 +153,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('debug').textContent = `Posición del usuario actualizada: ${this.posicionUsuario}`;
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 } else {
-                    this.posicionUsuario = 0; // Reiniciar posición del usuario
+                    // Reiniciar posición del usuario y comenzar la siguiente secuencia
+                    this.posicionUsuario = 0; 
                     this.rondaActual++;
                     if (this.rondaActual < this.rondasTotales) {
                         this.display.estadoJuego.textContent = `¡Bien hecho! Ronda: ${this.rondaActual + 1}`;
