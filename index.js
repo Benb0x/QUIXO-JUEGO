@@ -18,11 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
     acceptAudioButton.addEventListener('click', function() {
         const audio = new Audio('https://quixo-sonidos.vercel.app/sounds_1.m4a');
         audio.play().then(() => {
-            console.log("Sonido habilitado");
-            audioPermissionModal.style.display = 'none'; // Ocultar el modal
             document.getElementById('debug').textContent = "Sonido habilitado correctamente.";
+            audioPermissionModal.style.display = 'none'; // Ocultar el modal
         }).catch(error => {
-            console.error("Error al reproducir el sonido:", error);
             document.getElementById('debug').textContent = "Error al habilitar el sonido.";
         });
     });
@@ -36,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
             this.velocidad = 700;
             this.botonesBloqueados = true;
             this.secuenciaActiva = false;
-            this.secuenciaEnEjecucion = false;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
@@ -80,14 +77,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Escuchar tanto 'click' como 'touchend' para mejorar compatibilidad con iOS
                 boton.addEventListener('touchend', (event) => {
-                    if (!this.botonesBloqueados && !this.secuenciaEnEjecucion) {
+                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
                     }
                 });
 
                 boton.addEventListener('click', (event) => {
-                    if (!this.botonesBloqueados && !this.secuenciaEnEjecucion) {
+                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
                     }
@@ -108,10 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
         limpiarEstado() {
             clearTimeout(this.inactividadTimeout);
             clearInterval(this.secuenciaInterval);
-            this.secuenciaEnEjecucion = false;
-            this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
+            this.secuenciaActiva = false;
             this.botonesBloqueados = true;
             this.posicionUsuario = 0; // Reiniciar la posición del usuario en cada ronda
+            document.getElementById('debug').textContent = "Estado del juego limpiado. Posición del usuario reiniciada.";
         }
 
         resetEstadoJuego() {
@@ -123,15 +120,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         actualizarRonda(valor) {
             this.rondaActual = valor;
+            document.getElementById('debug').textContent = `Ronda actual: ${this.rondaActual}`;
         }
 
         crearSecuencia() {
-            return Array.from({ length: this.rondasTotales }, () => Math.floor(Math.random() * this.botones.length));
+            const secuenciaGenerada = Array.from({ length: this.rondasTotales }, () => Math.floor(Math.random() * this.botones.length));
+            document.getElementById('debug').textContent = `Secuencia creada: ${secuenciaGenerada}`;
+            return secuenciaGenerada;
         }
 
         validarColorElegido(indice) {
-            if (this.secuenciaEnEjecucion) return; // Evitar que se valide mientras la secuencia se está mostrando
+            if (this.secuenciaActiva) return; // Evitar que se valide mientras la secuencia se está mostrando
 
+            document.getElementById('debug').textContent = `Usuario eligió: ${indice}, se espera: ${this.secuencia[this.posicionUsuario]}`;
+            
             // Validación correcta de la entrada del usuario
             if (this.secuencia[this.posicionUsuario] === indice) {
                 clearTimeout(this.inactividadTimeout);
@@ -146,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (this.posicionUsuario < this.rondaActual) {
                     this.posicionUsuario++; // Aumentar la posición del usuario
                     this.display.estadoJuego.textContent = 'Correcto! Sigue así.';
+                    document.getElementById('debug').textContent = `Posición del usuario actualizada: ${this.posicionUsuario}`;
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 } else {
                     this.posicionUsuario = 0; // Reiniciar posición del usuario
@@ -164,8 +167,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         mostrarSecuencia() {
             this.botonesBloqueados = true; // Bloquear los botones mientras se muestra la secuencia
-            this.secuenciaEnEjecucion = true; // Indicar que la secuencia está en ejecución
+            this.secuenciaActiva = true; // Indicar que la secuencia está en ejecución
             let indiceSecuencia = 0;
+
+            document.getElementById('debug').textContent = `Mostrando secuencia: ${this.secuencia.slice(0, this.rondaActual + 1)}`;
 
             clearInterval(this.secuenciaInterval);
 
@@ -179,10 +184,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     indiceSecuencia++;
                 } else {
                     clearInterval(this.secuenciaInterval);
-                    this.secuenciaEnEjecucion = false; // Secuencia completa, permitir interacción
+                    this.secuenciaActiva = false; // Secuencia completa, permitir interacción
                     this.botonesBloqueados = false; // Permitir al usuario interactuar
                     this.posicionUsuario = 0; // Reiniciar la posición del usuario para la nueva ronda
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
+                    document.getElementById('debug').textContent = `Secuencia completa. Usuario puede interactuar.`;
                 }
             }, this.velocidad);
         }
@@ -202,12 +208,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 audio.currentTime = 0;  // Reinicia el audio
                 audio.play().then(() => {
                     document.getElementById("debug").textContent = `Reproduciendo sonido: ${indice}`;
-                    console.log(`Reproduciendo sonido: ${indice}`);
                 }).catch(error => {
-                    console.error('Error al reproducir el audio, reintentando:', error);
-                    document.getElementById("debug").textContent = 'Reintentando reproducir sonido...';
+                    document.getElementById("debug").textContent = 'Error al reproducir sonido, reintentando...';
                     setTimeout(() => {
-                        audio.play().catch(err => console.error('Error al reintentar reproducir el sonido:', err));
+                        audio.play().catch(err => {
+                            document.getElementById("debug").textContent = 'Error al reintentar reproducir el sonido.';
+                        });
                     }, 500);  // Intentar nuevamente después de 500ms
                 });
             }
