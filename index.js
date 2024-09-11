@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.velocidad = 700;
             this.botonesBloqueados = true;
             this.secuenciaActiva = false;
+            this.secuenciaCompletada = false; // Nueva variable para controlar cuándo el usuario puede interactuar
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
@@ -77,14 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Escuchar tanto 'click' como 'touchend' para mejorar compatibilidad con iOS
                 boton.addEventListener('touchend', (event) => {
-                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
+                    if (this.secuenciaCompletada && !this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
                     }
                 });
 
                 boton.addEventListener('click', (event) => {
-                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
+                    if (this.secuenciaCompletada && !this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
                     }
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.limpiarEstado();
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
-            this.posicionUsuario = 0; // Asegurar que se reinicie la posición del usuario
+            this.posicionUsuario = 0; // Reiniciar la posición del usuario
             this.secuencia = this.crearSecuencia();
             this.resetEstadoJuego();
             this.mostrarSecuencia();
@@ -106,8 +107,9 @@ document.addEventListener('DOMContentLoaded', function () {
             clearTimeout(this.inactividadTimeout);
             clearInterval(this.secuenciaInterval);
             this.secuenciaActiva = false;
+            this.secuenciaCompletada = false;
             this.botonesBloqueados = true;
-            this.posicionUsuario = 0; // Reiniciar la posición del usuario en cada ronda
+            this.posicionUsuario = 0; // Reiniciar la posición del usuario
             document.getElementById('debug').textContent = "Estado del juego limpiado. Posición del usuario reiniciada.";
         }
 
@@ -168,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarSecuencia() {
             this.botonesBloqueados = true; // Bloquear los botones mientras se muestra la secuencia
             this.secuenciaActiva = true; // Indicar que la secuencia está en ejecución
+            this.secuenciaCompletada = false; // Asegurar que el usuario no pueda interactuar hasta que la secuencia esté completa
             let indiceSecuencia = 0;
 
             document.getElementById('debug').textContent = `Mostrando secuencia: ${this.secuencia.slice(0, this.rondaActual + 1)}`;
@@ -186,6 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     clearInterval(this.secuenciaInterval);
                     this.secuenciaActiva = false; // Secuencia completa, permitir interacción
                     this.botonesBloqueados = false; // Permitir al usuario interactuar
+                    this.secuenciaCompletada = true; // Secuencia mostrada completamente
                     this.posicionUsuario = 0; // Reiniciar la posición del usuario para la nueva ronda
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                     document.getElementById('debug').textContent = `Secuencia completa. Usuario puede interactuar.`;
