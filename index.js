@@ -1,8 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const audioPermissionModal = document.getElementById("audioPermissionModal");
+    const acceptAudioButton = document.getElementById("acceptAudio");
     const botonEmpezar = document.getElementById("botonEmpezar");
     const estadoJuego = document.getElementById("estadoJuego");
     const ronda = document.getElementById("ronda");
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
+
+    acceptAudioButton.addEventListener('click', function() {
+        // Habilitar los sonidos del juego al aceptar
+        const audio = new Audio('https://quixo-sonidos.vercel.app/sounds_1.m4a');
+        audio.play().then(() => {
+            console.log("Sonido habilitado");
+            audioPermissionModal.style.display = 'none'; // Ocultar el modal
+        }).catch(error => {
+            console.error("Error al reproducir el sonido:", error);
+        });
+    });
+   
 
     class Quixo {
         constructor() {
