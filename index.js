@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botonesBloqueados = true;
             this.secuenciaActiva = false;
             this.secuenciaCompletada = false;
-            this.juegoPerdido = false; // Nueva variable para rastrear si el juego ya ha sido perdido
+            this.juegoPerdido = false; // Variable para evitar múltiples pérdidas
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botones.forEach(boton => {
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
 
-                // Usamos 'touchstart' para mejorar la compatibilidad con iOS
                 boton.addEventListener('touchstart', (event) => {
                     if (this.secuenciaCompletada && !this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
@@ -99,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.juegoPerdido = false; // Reiniciar el estado del juego
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
-            this.posicionUsuario = 0; // Reiniciar la posición del usuario
+            this.posicionUsuario = 0;
             this.secuencia = this.crearSecuencia();
             this.resetEstadoJuego();
             this.mostrarSecuencia();
@@ -111,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.secuenciaActiva = false;
             this.secuenciaCompletada = false;
             this.botonesBloqueados = true;
-            this.posicionUsuario = 0; // Reiniciar la posición del usuario
+            this.posicionUsuario = 0;
             document.getElementById('debug').textContent = "Estado del juego limpiado. Posición del usuario reiniciada.";
         }
 
@@ -134,13 +133,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         validarColorElegido(indice) {
-            if (this.secuenciaActiva || this.juegoPerdido) return; // Evitar que se valide mientras la secuencia se está mostrando o si el juego ya ha sido perdido
+            if (this.secuenciaActiva || this.juegoPerdido) return; // Evitar múltiples validaciones o si el juego ya fue perdido
 
             document.getElementById('debug').textContent = `Usuario eligió: ${indice}, se espera: ${this.secuencia[this.posicionUsuario]}`;
             
-            // Validación correcta de la entrada del usuario
             if (this.secuencia[this.posicionUsuario] === indice) {
-                clearTimeout(this.inactividadTimeout); // Reiniciar el temporizador de inactividad si el usuario acierta
+                clearTimeout(this.inactividadTimeout); // Detener el temporizador de inactividad si el usuario acierta
                 this.alternarEstiloBoton(this.botones[indice], true);
 
                 this.reproducirSonido(indice);
@@ -150,12 +148,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, this.velocidad / 2);
 
                 if (this.posicionUsuario < this.rondaActual) {
-                    this.posicionUsuario++; // Aumentar la posición del usuario
+                    this.posicionUsuario++;
                     this.display.estadoJuego.textContent = 'Correcto! Sigue así.';
                     document.getElementById('debug').textContent = `Posición del usuario actualizada: ${this.posicionUsuario}`;
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Reiniciar el temporizador
                 } else {
-                    // Reiniciar posición del usuario y comenzar la siguiente secuencia
                     this.posicionUsuario = 0; 
                     this.rondaActual++;
                     if (this.rondaActual < this.rondasTotales) {
@@ -166,14 +163,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             } else {
-                this.perderJuego(); // Si el usuario se equivoca
+                this.perderJuego();
             }
         }
 
         mostrarSecuencia() {
-            this.botonesBloqueados = true; // Bloquear los botones mientras se muestra la secuencia
-            this.secuenciaActiva = true; // Indicar que la secuencia está en ejecución
-            this.secuenciaCompletada = false; // Asegurar que el usuario no pueda interactuar hasta que la secuencia esté completa
+            this.botonesBloqueados = true;
+            this.secuenciaActiva = true;
+            this.secuenciaCompletada = false;
             let indiceSecuencia = 0;
 
             document.getElementById('debug').textContent = `Mostrando secuencia: ${this.secuencia.slice(0, this.rondaActual + 1)}`;
@@ -190,11 +187,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     indiceSecuencia++;
                 } else {
                     clearInterval(this.secuenciaInterval);
-                    this.secuenciaActiva = false; // Secuencia completa, permitir interacción
-                    this.botonesBloqueados = false; // Permitir al usuario interactuar
-                    this.secuenciaCompletada = true; // Secuencia mostrada completamente
-                    this.posicionUsuario = 0; // Reiniciar la posición del usuario para la nueva ronda
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Reiniciar el temporizador de inactividad
+                    this.secuenciaActiva = false;
+                    this.botonesBloqueados = false;
+                    this.secuenciaCompletada = true;
+                    this.posicionUsuario = 0;
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); 
                     document.getElementById('debug').textContent = `Secuencia completa. Usuario puede interactuar.`;
                 }
             }, this.velocidad);
@@ -221,21 +218,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         audio.play().catch(err => {
                             document.getElementById("debug").textContent = 'Error al reintentar reproducir el sonido.';
                         });
-                    }, 500);  // Intentar nuevamente después de 500ms
+                    }, 500);  
                 });
             }
         }
 
         perderJuego() {
-            if (this.juegoPerdido) return; // Evitar que se pierda varias veces
+            if (this.juegoPerdido) return; 
 
-            this.juegoPerdido = true; // Marcar que el juego se ha perdido
+            this.juegoPerdido = true; 
             this.limpiarEstado();
             this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
             this.display.estadoJuego.style.color = 'red';
             this.display.botonEmpezar.disabled = false;
 
-            this.reproducirSonido(4); // Sonido de error
+            this.reproducirSonido(4);
         }
 
         ganarJuego() {
@@ -247,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.display.ronda.style.display = 'none';
             this.botonesBloqueados = true;
 
-            this.reproducirSonido(5); // Sonido de victoria
+            this.reproducirSonido(5);
         }
     }
 
