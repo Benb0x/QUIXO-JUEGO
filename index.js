@@ -30,13 +30,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         async cargarSonidos() {
             const sonidos = [
-                'sounds/sounds_1.m4a',
-                'sounds/sounds_2.m4a',
-                'sounds/sounds_3.m4a',
-                'sounds/sounds_4.m4a',
-                'sounds/sounds_error.m4a',
-                'sounds/win.m4a'
+                'https://quixo-sonidos.vercel.app/sounds_1.m4a',
+                'https://quixo-sonidos.vercel.app/sounds_2.m4a',
+                'https://quixo-sonidos.vercel.app/sounds_3.m4a',
+                'https://quixo-sonidos.vercel.app/sounds_4.m4a',
+                'https://quixo-sonidos.vercel.app/sounds_error.m4a',
+                'https://quixo-sonidos.vercel.app/win.m4a'
             ];
+
 
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
