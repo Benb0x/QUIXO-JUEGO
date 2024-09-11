@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.velocidad = 700;
             this.botonesBloqueados = true;
             this.secuenciaActiva = false;
-            this.secuenciaCompletada = false; // Nueva variable para controlar cuándo el usuario puede interactuar
+            this.secuenciaCompletada = false;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botones.forEach(boton => {
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
 
-                // Escuchar tanto 'touchstart' como 'click' para mejorar compatibilidad con iOS
-                boton.addEventListener('touchend', (event) => {
+                // Usamos 'touchstart' para mejorar la compatibilidad con iOS
+                boton.addEventListener('touchstart', (event) => {
                     if (this.secuenciaCompletada && !this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
