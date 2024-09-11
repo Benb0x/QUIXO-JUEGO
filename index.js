@@ -35,11 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
             this.secuencia = [];
             this.velocidad = 700;
             this.botonesBloqueados = true;
+            this.secuenciaActiva = false;
+            this.secuenciaEnEjecucion = false;
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
             this.secuenciaInterval = null;
-            this.secuenciaActiva = false;
 
             this.display = {
                 botonEmpezar,
@@ -79,14 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Escuchar tanto 'click' como 'touchend' para mejorar compatibilidad con iOS
                 boton.addEventListener('touchend', (event) => {
-                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
+                    if (!this.botonesBloqueados && !this.secuenciaEnEjecucion) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
                     }
                 });
 
                 boton.addEventListener('click', (event) => {
-                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
+                    if (!this.botonesBloqueados && !this.secuenciaEnEjecucion) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
                     }
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         limpiarEstado() {
             clearTimeout(this.inactividadTimeout);
             clearInterval(this.secuenciaInterval);
-            this.secuenciaActiva = false;
+            this.secuenciaEnEjecucion = false;
             this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
             this.botonesBloqueados = true;
             this.posicionUsuario = 0; // Reiniciar la posición del usuario en cada ronda
@@ -129,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         validarColorElegido(indice) {
-            if (this.secuenciaActiva) return; // Evitar que se valide mientras la secuencia se está mostrando
+            if (this.secuenciaEnEjecucion) return; // Evitar que se valide mientras la secuencia se está mostrando
 
             // Validación correcta de la entrada del usuario
             if (this.secuencia[this.posicionUsuario] === indice) {
@@ -163,11 +164,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         mostrarSecuencia() {
             this.botonesBloqueados = true; // Bloquear los botones mientras se muestra la secuencia
+            this.secuenciaEnEjecucion = true; // Indicar que la secuencia está en ejecución
             let indiceSecuencia = 0;
 
             clearInterval(this.secuenciaInterval);
-
-            this.secuenciaActiva = true;
 
             this.secuenciaInterval = setInterval(() => {
                 if (indiceSecuencia > 0) {
@@ -179,8 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     indiceSecuencia++;
                 } else {
                     clearInterval(this.secuenciaInterval);
-                    this.secuenciaActiva = false;
-                    this.botonesBloqueados = false; // Permitir al usuario interactuar solo después de que la secuencia termine
+                    this.secuenciaEnEjecucion = false; // Secuencia completa, permitir interacción
+                    this.botonesBloqueados = false; // Permitir al usuario interactuar
                     this.posicionUsuario = 0; // Reiniciar la posición del usuario para la nueva ronda
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
