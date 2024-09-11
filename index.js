@@ -236,4 +236,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     new Quixo();
-});
+})
