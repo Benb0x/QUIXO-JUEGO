@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.limpiarEstado();
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
-            this.posicionUsuario = 0;
+            this.posicionUsuario = 0; // Asegurar que se reinicie la posición del usuario
             this.secuencia = this.crearSecuencia();
             this.resetEstadoJuego();
             this.mostrarSecuencia();
@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.secuenciaActiva = false;
             this.botones.forEach(boton => this.alternarEstiloBoton(boton, false));
             this.botonesBloqueados = true;
+            this.posicionUsuario = 0; // Reiniciar la posición del usuario en cada ronda
         }
 
         resetEstadoJuego() {
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         validarColorElegido(indice) {
             if (this.secuenciaActiva) return;
 
+            // Validación correcta de la entrada del usuario
             if (this.secuencia[this.posicionUsuario] === indice) {
                 clearTimeout(this.inactividadTimeout);
                 this.alternarEstiloBoton(this.botones[indice], true);
@@ -140,8 +142,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     this.alternarEstiloBoton(this.botones[indice], false);
                 }, this.velocidad / 2);
 
-                if (this.rondaActual === this.posicionUsuario) {
-                    this.posicionUsuario = 0;
+                if (this.posicionUsuario < this.rondaActual) {
+                    this.posicionUsuario++; // Aumentar la posición del usuario
+                    this.display.estadoJuego.textContent = 'Correcto! Sigue así.';
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
+                } else {
+                    this.posicionUsuario = 0; // Reiniciar posición del usuario
                     this.rondaActual++;
                     if (this.rondaActual < this.rondasTotales) {
                         this.display.estadoJuego.textContent = `¡Bien hecho! Ronda: ${this.rondaActual + 1}`;
@@ -149,13 +155,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         this.ganarJuego();
                     }
-                } else {
-                    this.posicionUsuario++;
-                    this.display.estadoJuego.textContent = 'Correcto! Sigue así.';
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
             } else {
-                setTimeout(() => this.perderJuego(), 250);
+                this.perderJuego(); // Si el usuario se equivoca
             }
         }
 
@@ -179,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     clearInterval(this.secuenciaInterval);
                     this.secuenciaActiva = false;
                     this.botonesBloqueados = false;
+                    this.posicionUsuario = 0; // Reiniciar la posición del usuario para la nueva ronda
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
             }, this.velocidad);
