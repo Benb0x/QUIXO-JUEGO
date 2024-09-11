@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
-                    audio.crossOrigin = 'anonymous';  // Evitar problemas de CORS si los archivos están en otro dominio
+                    audio.preload = "auto";  // Forzar la precarga del audio
+                    audio.crossOrigin = 'anonymous'; 
                     audio.addEventListener('canplaythrough', () => {
                         this.sonidosBoton[indice] = audio;
                         resolve();
@@ -90,6 +91,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             this.botones.forEach(boton => {
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
+
+                // Escuchar tanto 'click' como 'touchstart'
+                boton.addEventListener('touchstart', (event) => {
+                    if (!this.botonesBloqueados && !this.secuenciaActiva) {
+                        const indice = this.botones.indexOf(event.currentTarget);
+                        this.validarColorElegido(indice);
+                    }
+                });
 
                 boton.addEventListener('click', (event) => {
                     if (!this.botonesBloqueados && !this.secuenciaActiva) {
@@ -206,8 +215,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById("debug").textContent = `Reproduciendo sonido: ${indice}`;
                     console.log(`Reproduciendo sonido: ${indice}`);
                 }).catch(error => {
-                    document.getElementById("debug").textContent = 'Error al reproducir el sonido.';
-                    console.error('Error al reproducir el audio:', error);
+                    console.error('Error al reproducir el audio, reintentando:', error);
+                    document.getElementById("debug").textContent = 'Reintentando reproducir sonido...';
+                    setTimeout(() => {
+                        audio.play().catch(err => console.error('Error al reintentar reproducir el sonido:', err));
+                    }, 500);  // Intentar nuevamente después de 500ms
                 });
             }
         }
