@@ -6,17 +6,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const ronda = document.getElementById("ronda");
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
 
+    // Crear área de depuración
+    const debugArea = document.createElement('div');
+    debugArea.id = 'debug';
+    debugArea.style.color = 'red';
+    debugArea.style.fontWeight = 'bold';
+    debugArea.style.marginTop = '20px';
+    document.body.appendChild(debugArea); // Añadir al final del body
+
+    // Al hacer clic en "Aceptar", habilitamos los sonidos del juego
     acceptAudioButton.addEventListener('click', function() {
-        // Habilitar los sonidos del juego al aceptar
         const audio = new Audio('https://quixo-sonidos.vercel.app/sounds_1.m4a');
         audio.play().then(() => {
             console.log("Sonido habilitado");
             audioPermissionModal.style.display = 'none'; // Ocultar el modal
+            document.getElementById('debug').textContent = "Sonido habilitado correctamente.";
         }).catch(error => {
             console.error("Error al reproducir el sonido:", error);
+            document.getElementById('debug').textContent = "Error al habilitar el sonido.";
         });
     });
-   
 
     class Quixo {
         constructor() {
@@ -52,11 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 'https://quixo-sonidos.vercel.app/win.m4a'
             ];
 
-
             const promesas = sonidos.map((sonido, indice) => {
                 return new Promise((resolve, reject) => {
                     const audio = new Audio(sonido);
-                    audio.crossOrigin = 'anonymous';  // Para evitar problemas de CORS si los archivos están en otro dominio
+                    audio.crossOrigin = 'anonymous';  // Evitar problemas de CORS si los archivos están en otro dominio
                     audio.addEventListener('canplaythrough', () => {
                         this.sonidosBoton[indice] = audio;
                         resolve();
@@ -68,29 +76,21 @@ document.addEventListener('DOMContentLoaded', function () {
             try {
                 await Promise.all(promesas);
                 console.log('Todos los sonidos se han cargado correctamente.');
+                document.getElementById('debug').textContent = "Sonidos cargados correctamente.";
             } catch (error) {
                 console.error('Error al cargar los sonidos:', error);
+                document.getElementById('debug').textContent = "Error al cargar los sonidos.";
             }
         }
 
         iniciar() {
             this.display.botonEmpezar.addEventListener('click', () => {
-                // Reproducción de sonido de prueba para asegurarse de que el sonido se activa tras la interacción
-                const audioPrueba = new Audio('sounds/sounds_1.mp3');
-                audioPrueba.play().then(() => {
-                    console.log('Sonido de prueba reproduciéndose.');
-                }).catch(error => {
-                    console.error('Error al reproducir el audio de prueba:', error);
-                });
-
                 this.iniciarJuego();
             });
 
             this.botones.forEach(boton => {
-                // Establecemos los colores inactivos al iniciar el juego
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
 
-                // Configuramos la interacción del clic en los botones
                 boton.addEventListener('click', (event) => {
                     if (!this.botonesBloqueados && !this.secuenciaActiva) {
                         const indice = this.botones.indexOf(event.currentTarget);
@@ -102,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         iniciarJuego() {
             this.limpiarEstado();
-
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
             this.posicionUsuario = 0;
@@ -201,10 +200,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         reproducirSonido(indice) {
             const audio = this.sonidosBoton[indice];
+            document.getElementById("debug").textContent = `Intentando reproducir sonido: ${indice}`;
             if (audio) {
                 audio.play().then(() => {
+                    document.getElementById("debug").textContent = `Reproduciendo sonido: ${indice}`;
                     console.log(`Reproduciendo sonido: ${indice}`);
                 }).catch(error => {
+                    document.getElementById("debug").textContent = 'Error al reproducir el sonido.';
                     console.error('Error al reproducir el audio:', error);
                 });
             }
