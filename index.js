@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botonesBloqueados = true;
             this.secuenciaActiva = false;
             this.secuenciaCompletada = false;
+            this.juegoPerdido = false; // Nueva variable para rastrear si el juego ya ha sido perdido
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
@@ -95,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         iniciarJuego() {
             this.limpiarEstado();
+            this.juegoPerdido = false; // Reiniciar el estado del juego
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
             this.posicionUsuario = 0; // Reiniciar la posición del usuario
@@ -132,13 +134,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         validarColorElegido(indice) {
-            if (this.secuenciaActiva) return; // Evitar que se valide mientras la secuencia se está mostrando
+            if (this.secuenciaActiva || this.juegoPerdido) return; // Evitar que se valide mientras la secuencia se está mostrando o si el juego ya ha sido perdido
 
             document.getElementById('debug').textContent = `Usuario eligió: ${indice}, se espera: ${this.secuencia[this.posicionUsuario]}`;
             
             // Validación correcta de la entrada del usuario
             if (this.secuencia[this.posicionUsuario] === indice) {
-                clearTimeout(this.inactividadTimeout);
+                clearTimeout(this.inactividadTimeout); // Reiniciar el temporizador de inactividad si el usuario acierta
                 this.alternarEstiloBoton(this.botones[indice], true);
 
                 this.reproducirSonido(indice);
@@ -192,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     this.botonesBloqueados = false; // Permitir al usuario interactuar
                     this.secuenciaCompletada = true; // Secuencia mostrada completamente
                     this.posicionUsuario = 0; // Reiniciar la posición del usuario para la nueva ronda
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Reiniciar el temporizador de inactividad
                     document.getElementById('debug').textContent = `Secuencia completa. Usuario puede interactuar.`;
                 }
             }, this.velocidad);
@@ -225,6 +227,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         perderJuego() {
+            if (this.juegoPerdido) return; // Evitar que se pierda varias veces
+
+            this.juegoPerdido = true; // Marcar que el juego se ha perdido
             this.limpiarEstado();
             this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
             this.display.estadoJuego.style.color = 'red';
