@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.iniciar();
         }
 
-        async cargarSonidos() {
+        cargarSonidos() {
             const sonidos = [
                 'https://quixo-sonidos.vercel.app/sounds_1.m4a',
                 'https://quixo-sonidos.vercel.app/sounds_2.m4a',
@@ -61,27 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 'https://quixo-sonidos.vercel.app/win.m4a'
             ];
 
-            const promesas = sonidos.map((sonido, indice) => {
-                return new Promise((resolve, reject) => {
-                    const audio = new Audio(sonido);
-                    audio.preload = "auto";  // Forzar la precarga del audio
-                    audio.crossOrigin = 'anonymous'; 
-                    audio.addEventListener('canplaythrough', () => {
-                        this.sonidosBoton[indice] = audio;
-                        resolve();
-                    }, { once: true });
-                    audio.addEventListener('error', () => reject(new Error(`Error al cargar el sonido: ${sonido}`)));
-                });
+            sonidos.forEach((sonido, indice) => {
+                const audio = new Audio(sonido);
+                audio.preload = "auto";  // Precargar el audio
+                audio.crossOrigin = 'anonymous'; 
+                this.sonidosBoton[indice] = audio;
             });
-
-            try {
-                await Promise.all(promesas);
-                console.log('Todos los sonidos se han cargado correctamente.');
-                document.getElementById('debug').textContent = "Sonidos cargados correctamente.";
-            } catch (error) {
-                console.error('Error al cargar los sonidos:', error);
-                document.getElementById('debug').textContent = "Error al cargar los sonidos.";
-            }
         }
 
         iniciar() {
@@ -92,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botones.forEach(boton => {
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
 
-                // Escuchar tanto 'click' como 'touchstart'
-                boton.addEventListener('touchstart', (event) => {
+                // Escuchar tanto 'click' como 'touchend' para mejorar compatibilidad con iOS
+                boton.addEventListener('touchend', (event) => {
                     if (!this.botonesBloqueados && !this.secuenciaActiva) {
                         const indice = this.botones.indexOf(event.currentTarget);
                         this.validarColorElegido(indice);
@@ -211,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const audio = this.sonidosBoton[indice];
             document.getElementById("debug").textContent = `Intentando reproducir sonido: ${indice}`;
             if (audio) {
+                audio.currentTime = 0;  // Reinicia el audio
                 audio.play().then(() => {
                     document.getElementById("debug").textContent = `Reproduciendo sonido: ${indice}`;
                     console.log(`Reproduciendo sonido: ${indice}`);
