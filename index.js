@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botonesBloqueados = true;
             this.secuenciaActiva = false;
             this.secuenciaCompletada = false;
-            this.juegoPerdido = false; // Variable para evitar múltiples pérdidas
+            this.juegoPerdido = false; 
             this.botones = Array.from(botonesJuego);
             this.sonidosBoton = [];
             this.inactividadTimeout = null;
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         iniciarJuego() {
             this.limpiarEstado();
-            this.juegoPerdido = false; // Reiniciar el estado del juego
+            this.juegoPerdido = false; 
             this.display.botonEmpezar.disabled = true;
             this.actualizarRonda(0);
             this.posicionUsuario = 0;
@@ -133,12 +133,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         validarColorElegido(indice) {
-            if (this.secuenciaActiva || this.juegoPerdido) return; // Evitar múltiples validaciones o si el juego ya fue perdido
+            // Cancelar el temporizador de inactividad antes de cualquier validación
+            clearTimeout(this.inactividadTimeout);
+
+            if (this.secuenciaActiva || this.juegoPerdido) return; 
 
             document.getElementById('debug').textContent = `Usuario eligió: ${indice}, se espera: ${this.secuencia[this.posicionUsuario]}`;
             
             if (this.secuencia[this.posicionUsuario] === indice) {
-                clearTimeout(this.inactividadTimeout); // Detener el temporizador de inactividad si el usuario acierta
                 this.alternarEstiloBoton(this.botones[indice], true);
 
                 this.reproducirSonido(indice);
@@ -151,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     this.posicionUsuario++;
                     this.display.estadoJuego.textContent = 'Correcto! Sigue así.';
                     document.getElementById('debug').textContent = `Posición del usuario actualizada: ${this.posicionUsuario}`;
-                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000); // Reiniciar el temporizador
+                    this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 } else {
                     this.posicionUsuario = 0; 
                     this.rondaActual++;
@@ -224,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         perderJuego() {
-            if (this.juegoPerdido) return; 
+            if (this.juegoPerdido) return;
 
             this.juegoPerdido = true; 
             this.limpiarEstado();
