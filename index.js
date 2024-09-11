@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         validarColorElegido(indice) {
-            if (this.secuenciaActiva) return;
+            if (this.secuenciaActiva) return; // Evitar que se valide mientras la secuencia se está mostrando
 
             // Validación correcta de la entrada del usuario
             if (this.secuencia[this.posicionUsuario] === indice) {
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         mostrarSecuencia() {
-            this.botonesBloqueados = true;
+            this.botonesBloqueados = true; // Bloquear los botones mientras se muestra la secuencia
             let indiceSecuencia = 0;
 
             clearInterval(this.secuenciaInterval);
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     clearInterval(this.secuenciaInterval);
                     this.secuenciaActiva = false;
-                    this.botonesBloqueados = false;
+                    this.botonesBloqueados = false; // Permitir al usuario interactuar solo después de que la secuencia termine
                     this.posicionUsuario = 0; // Reiniciar la posición del usuario para la nueva ronda
                     this.inactividadTimeout = setTimeout(() => this.perderJuego(), 15000);
                 }
@@ -236,4 +236,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     new Quixo();
-})
+});
