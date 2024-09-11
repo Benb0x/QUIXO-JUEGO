@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botones.forEach(boton => {
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
 
-                // Usamos 'touchstart' para mejorar la compatibilidad con iOS
+                // Eventos para asegurar interacción correcta en iOS
                 boton.addEventListener('touchstart', (event) => {
                     if (this.secuenciaCompletada && !this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
