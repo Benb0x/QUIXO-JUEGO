@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botones.forEach(boton => {
                 boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
 
-                // Escuchar tanto 'click' como 'touchend' para mejorar compatibilidad con iOS
+                // Escuchar tanto 'touchstart' como 'click' para mejorar compatibilidad con iOS
                 boton.addEventListener('touchend', (event) => {
                     if (this.secuenciaCompletada && !this.botonesBloqueados) {
                         const indice = this.botones.indexOf(event.currentTarget);
