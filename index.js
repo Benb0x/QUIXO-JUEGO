@@ -6,22 +6,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const ronda = document.getElementById("ronda");
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
 
-    // Crear área de depuración
-    const debugArea = document.createElement('div');
-    debugArea.id = 'debug';
-    debugArea.style.color = 'red';
-    debugArea.style.fontWeight = 'bold';
-    debugArea.style.marginTop = '20px';
-    document.body.appendChild(debugArea);
-
     // Habilitar sonidos en iOS
     acceptAudioButton.addEventListener('click', function() {
         const audio = new Audio('https://quixo-sonidos.vercel.app/sounds_1.m4a');
         audio.play().then(() => {
-            document.getElementById('debug').textContent = "Sonido habilitado correctamente.";
             audioPermissionModal.style.display = 'none';
         }).catch(error => {
-            document.getElementById('debug').textContent = "Error al habilitar el sonido.";
+            console.error("Error al habilitar el sonido.");
         });
     });
 
@@ -160,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (audio) {
                 audio.currentTime = 0;
                 audio.play().catch(error => {
-                    document.getElementById('debug').textContent = 'Error al reproducir sonido.';
+                    console.error('Error al reproducir sonido.');
                 });
             }
         }
