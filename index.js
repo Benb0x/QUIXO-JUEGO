@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const ronda = document.getElementById("ronda");
     const botonesJuego = document.querySelectorAll("#grupoInteractivo use");
 
-    // Habilitar sonidos en iOS
+    const mensajesPositivos = ["¡Bien hecho!", "¡Excelente!", "¡Sigue así!", "¡Muy bien!", "¡Continúa!"];
+
     acceptAudioButton.addEventListener('click', function() {
         const audio = new Audio('https://quixo-sonidos.vercel.app/sounds_1.m4a');
         audio.play().then(() => {
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         iniciarJuego() {
             this.limpiarEstado();
             this.display.botonEmpezar.disabled = true;
-            this.actualizarRonda(0);
+            this.actualizarEstado("¡Vamos a empezar!", 0); // Mensaje inicial
             this.mostrarSecuencia();
         }
 
@@ -86,9 +87,10 @@ document.addEventListener('DOMContentLoaded', function () {
             this.rondaActual = 0;
         }
 
-        actualizarRonda(valor) {
-            this.rondaActual = valor;
-            this.display.ronda.textContent = `Ronda ${this.rondaActual + 1}`;
+        actualizarEstado(mensaje, ronda) {
+            const mensajePositivo = mensajesPositivos[Math.floor(Math.random() * mensajesPositivos.length)];
+            this.display.estadoJuego.textContent = `${mensajePositivo} Siguiente ronda: ${ronda + 1}`;
+            this.display.estadoJuego.style.display = 'block';
         }
 
         validarColorElegido(indice) {
@@ -107,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (this.posicionUsuario > this.rondaActual) {
                     this.rondaActual++;
                     if (this.rondaActual < this.secuencia.length) {
-                        this.actualizarRonda(this.rondaActual);
+                        this.actualizarEstado("¡Muy bien!", this.rondaActual); // Actualizar mensaje y ronda
                         setTimeout(() => this.mostrarSecuencia(), this.velocidad);
                     } else {
                         this.ganarJuego();
@@ -160,13 +162,16 @@ document.addEventListener('DOMContentLoaded', function () {
             this.limpiarEstado();
             this.display.estadoJuego.textContent = 'Perdiste. Intenta de nuevo.';
             this.display.estadoJuego.style.color = 'red';
+            this.display.ronda.style.display = 'none';
             this.reproducirSonido(4);
         }
 
         ganarJuego() {
             this.limpiarEstado();
-            this.display.estadoJuego.textContent = '¡Ganaste!';
-            this.display.estadoJuego.style.color = 'green';
+            this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S &nbsp;&nbsp;&nbsp; G A N A S T E!';
+            
+
+            this.display.ronda.style.display = 'none';
             this.reproducirSonido(5);
         }
     }

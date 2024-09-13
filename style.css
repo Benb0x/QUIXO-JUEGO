@@ -110,7 +110,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 }
 
 #estadoJuego, #ronda {
-    color: #000000;
+    color: #2568b4;
     font-size: 29px;
     margin: 10px auto 0; /* Centra estos elementos y añade espacio superior */
     display: block; /* Asegura que cada uno esté en su propia línea */
