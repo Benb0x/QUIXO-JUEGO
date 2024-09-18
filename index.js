@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         iniciar() {
             this.display.botonEmpezar.addEventListener('click', () => {
-                this.iniciarJuego();
+                this.reiniciarJuego(); // Llamamos a la función de reinicio aquí
             });
 
             this.botones = Array.from(botonesJuego);
@@ -73,10 +73,17 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        iniciarJuego() {
+        reiniciarJuego() {
+            // Restablecer la secuencia y el estado inicial
             this.limpiarEstado();
-            this.display.botonEmpezar.disabled = true;
-            this.actualizarEstado("¡Vamos a empezar!", 0); // Mensaje inicial
+            this.secuencia = [0, 1, 2, 3]; // Puedes cambiar esto para generar una secuencia aleatoria si es necesario
+            this.rondaActual = 0;
+            this.posicionUsuario = 0;
+            this.botonesBloqueados = false;
+            this.display.estadoJuego.textContent = ''; // Limpiar mensajes previos
+            this.display.estadoJuego.style.color = '#4682B4'; 
+            this.display.botonEmpezar.disabled = true; // Desactivar botón de nuevo hasta que se termine la secuencia
+            this.actualizarEstado("¡Vamos a empezar!", 0);
             this.mostrarSecuencia();
         }
 
@@ -85,6 +92,11 @@ document.addEventListener('DOMContentLoaded', function () {
             this.botonesBloqueados = true;
             this.posicionUsuario = 0;
             this.rondaActual = 0;
+
+            // Restablecer colores de los botones
+            this.botones.forEach(boton => {
+                boton.setAttribute('fill', boton.getAttribute('data-color-inactivo'));
+            });
         }
 
         actualizarEstado(mensaje, ronda) {
@@ -109,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (this.posicionUsuario > this.rondaActual) {
                     this.rondaActual++;
                     if (this.rondaActual < this.secuencia.length) {
-                        this.actualizarEstado("¡Muy bien!", this.rondaActual); // Actualizar mensaje y ronda
+                        this.actualizarEstado("¡Muy bien!", this.rondaActual);
                         setTimeout(() => this.mostrarSecuencia(), this.velocidad);
                     } else {
                         this.ganarJuego();
@@ -164,15 +176,21 @@ document.addEventListener('DOMContentLoaded', function () {
             this.display.estadoJuego.style.color = 'red';
             this.display.ronda.style.display = 'none';
             this.reproducirSonido(4);
+            this.display.botonEmpezar.disabled = false; // Reactivar el botón después de perder
         }
 
         ganarJuego() {
             this.limpiarEstado();
-            this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S &nbsp;&nbsp;&nbsp; G A N A S T E!';
-            
-
+        
+            if (window.innerWidth <= 375) {
+                this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S<br>G A N A S T E!';
+            } else {
+                this.display.estadoJuego.innerHTML = '¡F E L I C I D A D E S <span class="espacio-ganaste"></span> G A N A S T E!';
+            }
+        
             this.display.ronda.style.display = 'none';
             this.reproducirSonido(5);
+            this.display.botonEmpezar.disabled = false; // Reactivar el botón después de ganar
         }
     }
 

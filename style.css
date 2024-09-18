@@ -119,6 +119,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     top: 54%; 
     transform: translateY(-50%); 
     margin-left: 20px;
+    z-index: 2;  
     
 }
 
@@ -128,6 +129,10 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     margin-bottom: 20px;
     top: 54%; 
     /* Espacio entre 'Estado del juego' y 'Ronda' */
+}
+.espacio-ganaste {
+    display: inline-block;
+    width: 20px; /* Ajustar el ancho del espacio entre palabras */
 }
 
 .blue-bold {
@@ -167,7 +172,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     animation: animacion-ganador 1s ease-in-out;
 }
 
-@media(max-width: 768px){
+@media screen and (max-width: 375px) {
     body{
         padding-top: 20px ;
     }
@@ -247,9 +252,12 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     #estadoJuego, #ronda {
         margin-left: 0; /* Elimina el margen izquierdo */
         text-align: center;
+        font-size: 5vw; /* Ajusta el tamaño del texto para que se vea mejor en móviles */
+        line-height: 1.5;
         left: 50%;
         transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
         top:80%;
+        white-space: normal;
     }
 }
 
