@@ -312,7 +312,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 120%; /* Ajusta la posición vertical */
         left: 75%;
         transform: translate(-50%, -50%); /* Centra el círculo */
-        width: 90%; /* Ajusta el tamaño del círculo */
+        width: 80%; /* Ajusta el tamaño del círculo */
         height: auto; /* Mantén la proporción */
         margin: 0 -25%;
         display: flex;
@@ -322,7 +322,17 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         border-radius: 50%; 
     }
     
-    
+    #quixoLineas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Asegura que el contenido esté centrado dentro del círculo */
+        height: auto;
+    }
+    #figura svg {
+        width: 85%; /* Ajusta el tamaño del SVG sin deformarlo */
+        height: auto; /* Mantiene la proporción original del SVG */
+    }
 
     #botonEmpezar {
         position: absolute;
