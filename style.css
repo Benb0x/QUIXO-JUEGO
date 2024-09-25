@@ -444,3 +444,85 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     all: unset; /* Resetea todos los estilos aplicados */
    /* display: block; /* Asegura que los elementos sean bloques */
 /*}*/
+@media (min-width: 569px) and (max-width: 767px) {
+    h1 {
+        font-size: 8vw; 
+        top: 12%; 
+    }
+
+    #p1 {
+        font-size: 4.5vw; 
+        top: 28%; 
+    }
+
+    .circulo {
+        top: 110%; 
+        width: 80%; 
+    }
+
+    #botonEmpezar {
+        top: 145%; 
+        font-size: 5.5vw; 
+    }
+
+    #estadoJuego {
+        top: 60%; 
+        font-size: 4.5vw; 
+    }
+}
+
+/* Teléfonos grandes */
+@media (min-width: 768px) and (max-width: 844px) {
+    h1 {
+        font-size: 7vw; 
+        top: 12%; 
+    }
+
+    #p1 {
+        font-size: 4vw; 
+        top: 28%; 
+    }
+
+    .circulo {
+        top: 110%; 
+        width: 85%; 
+    }
+
+    #botonEmpezar {
+        top: 150%; 
+        font-size: 5vw; 
+    }
+
+    #estadoJuego {
+        top: 60%; 
+        font-size: 4vw; 
+    }
+}
+
+/* Dispositivos más grandes */
+@media (min-width: 845px) {
+    h1 {
+        font-size: 6vw; 
+        top: 10%; 
+    }
+
+    #p1 {
+        font-size: 3.5vw; 
+        top: 25%; 
+    }
+
+    .circulo {
+        top: 100%; 
+        width: 80%; 
+    }
+
+    #botonEmpezar {
+        top: 140%; 
+        font-size: 4.5vw; 
+    }
+
+    #estadoJuego {
+        top: 55%; 
+        font-size: 3.5vw; 
+    }
+}
