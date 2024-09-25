@@ -307,21 +307,20 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     }
     
 
+    
+    
     .circulo {
-        position: absolute;
-        top: 100%; /* Ajusta la posición vertical */
-        left: 75%;
-        transform: translate(-50%, -50%); /* Centra el círculo */
-        width: 100%; /* Ajusta el tamaño del círculo */
-        height: auto; /* Mantén la proporción */
-        margin: 0 -25%;
+        width: 100%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
+        max-width: 300px;/* Aumenta el ancho del círculo para que desborde los bordes */
+        height: 65vh; /* Mantiene la proporción original */
+        margin: 0 auto; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
         display: flex;
         justify-content: center;
         align-items: center;
         overflow: hidden; /* Oculta cualquier contenido que desborde */
         border-radius: 50%; 
+        position: relative;
     }
-    
     
 
     #botonEmpezar {
