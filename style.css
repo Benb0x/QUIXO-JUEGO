@@ -312,7 +312,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 108%; /* Ajusta la posición vertical */
         left: 75%;
         transform: translate(-50%, -50%); /* Centra el círculo */
-        width: 125%; /* Ajusta el tamaño del círculo */
+        width: 110%; /* Ajusta el tamaño del círculo */
         height: auto; /* Mantén la proporción */
         margin: 0 -25%;
         display: flex;
@@ -337,7 +337,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
     #estadoJuego {
         position: absolute;
-        top: 55%; /* Ajusta la posición vertical del texto */
+        top: 75%; /* Ajusta la posición vertical del texto */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
         font-size: 4vw; /* Ajusta el tamaño del texto */
@@ -350,7 +350,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         line-height: 1.5;
         left: 50%;
         transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
-        top:50%;
+        top:75%;
         white-space: normal;
     }
 }
