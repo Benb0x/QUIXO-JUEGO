@@ -169,8 +169,20 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
 @media screen and (max-width: 375px) {
     body{
-        padding-top: 20px ;
+        margin: 0;
+        padding: 0;
+        height: 100vh; /* Para que el body ocupe el 100% de la altura de la pantalla */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%; /* Para que el contenedor ocupe el 100% del body */
+      }
     h1{
         font-size: 66px; /* Ajusta el tamaño del texto en móviles */
         margin-left: 0 ;
@@ -280,22 +292,22 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         width: 80%; /* Asegura que el texto no sea demasiado ancho */
 
     }
-
-    .logo-container {
-        position: absolute;
-        top: 2%; /* Ajusta la posición vertical del logo */
-        left: 50%;
-        transform: translateX(-50%); /* Centra horizontalmente */
-        width: 150px; /* Tamaño del logo adecuado para pantallas grandes */
-        align-items: center;
+    .logo-container{
+        position: static; 
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        margin-left: 0; 
+        margin-top: 20px;
     }
+    
 
     .circulo {
         position: absolute;
-        top: 108%; /* Ajusta la posición vertical */
+        top: 115%; /* Ajusta la posición vertical */
         left: 75%;
         transform: translate(-50%, -50%); /* Centra el círculo */
-        width: 150%; /* Ajusta el tamaño del círculo */
+        width: 80%; /* Ajusta el tamaño del círculo */
         height: auto; /* Mantén la proporción */
         margin: 0 -25%;
         display: flex;
@@ -305,7 +317,17 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         border-radius: 50%; 
     }
     
-    
+    #quixoLineas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Asegura que el contenido esté centrado dentro del círculo */
+        height: auto;
+    }
+    #figura svg {
+        width: 85%; /* Ajusta el tamaño del SVG sin deformarlo */
+        height: auto; /* Mantiene la proporción original del SVG */
+    }
 
     #botonEmpezar {
         position: absolute;
@@ -315,15 +337,26 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         width: 80%; /* Ajusta el ancho del botón */
         padding: 15px; /* Aumenta el padding para pantallas grandes */
         font-size: 5vw; /* Ajusta el tamaño del texto del botón */
+        margin: 20px auto;
     }
 
     #estadoJuego {
         position: absolute;
-        top: 55%; /* Ajusta la posición vertical del texto */
+        top: 65%; /* Ajusta la posición vertical del texto */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
         font-size: 4vw; /* Ajusta el tamaño del texto */
         text-align: center;
+    }
+    #estadoJuego, #ronda {
+        margin-left: 0; /* Elimina el margen izquierdo */
+        text-align: center;
+        font-size: 6vw; /* Ajusta el tamaño del texto para que se vea mejor en móviles */
+        line-height: 1.5;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
+        top:65%;
+        white-space: normal;
     }
 }
 
@@ -333,7 +366,6 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     all: unset; /* Resetea todos los estilos aplicados */
    /* display: block; /* Asegura que los elementos sean bloques */
 /*}*/
-
 
 
 
@@ -401,8 +433,3 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
 }
 /*pantallas pequeñas*/
-
-/*body .logo-container, body .circulo, body #botonEmpezar, body #estadoJuego {
-    all: unset; /* Resetea todos los estilos aplicados */
-   /* display: block; /* Asegura que los elementos sean bloques */
-/*}*/
