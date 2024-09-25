@@ -309,10 +309,10 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
     .circulo {
         position: absolute;
-        top: 100%; /* Ajusta la posición vertical */
+        top: 120%; /* Ajusta la posición vertical */
         left: 75%;
         transform: translate(-50%, -50%); /* Centra el círculo */
-        width: 110%; /* Ajusta el tamaño del círculo */
+        width: 90%; /* Ajusta el tamaño del círculo */
         height: auto; /* Mantén la proporción */
         margin: 0 -25%;
         display: flex;
