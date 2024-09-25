@@ -297,15 +297,15 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         width: 80%; /* Asegura que el texto no sea demasiado ancho */
 
     }
-
-    .logo-container {
-        position: absolute;
-        top: 2%; /* Ajusta la posición vertical del logo */
-        left: 50%;
-        transform: translateX(-50%); /* Centra horizontalmente */
-        width: 150px; /* Tamaño del logo adecuado para pantallas grandes */
-        align-items: center;
+    .logo-container{
+        position: static; 
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        margin-left: 0; 
+        margin-top: 20px;
     }
+    
 
     .circulo {
         position: absolute;
@@ -350,7 +350,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         line-height: 1.5;
         left: 50%;
         transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
-        top:80%;
+        top:50%;
         white-space: normal;
     }
 }
