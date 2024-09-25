@@ -274,8 +274,13 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 }
 
 @media only screen and (min-width: 430px) and (max-width: 460px) {
-    body {
-        padding-top: 25px;
+    body{
+        margin: 0;
+        padding: 0;
+        height: 100vh; /* Para que el body ocupe el 100% de la altura de la pantalla */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     
@@ -284,7 +289,8 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 15%; /* Ajusta este valor según necesites */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        font-size:  8vw; /* Tamaño adecuado para pantallas grandes */
+        font-size: 1.5rem;  /* Reducir tamaño del texto */
+        line-height: 1.2; /* Tamaño adecuado para pantallas grandes */
     }
 
     #p1 {
@@ -292,11 +298,18 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 30%; /* Ajusta la posición vertical */
         left: 50%;
         transform: translateX(-50%); /* Centra horizontalmente */
-        font-size: 4vw; /* Ajusta el tamaño del texto */
+        font-size: 1rem;
+        line-height: 1.5; /* Ajusta el tamaño del texto */
         text-align: center;
         width: 80%; /* Asegura que el texto no sea demasiado ancho */
 
     }
+    .container {
+        margin: 0 auto;
+        padding: 10px;
+        width: 100%;  /* Asegurarse de que el contenedor ocupe todo el ancho */
+        max-width: 400px;  /* Limitar el ancho máximo para pantallas grandes */
+      }
 
     .logo-container {
         position: absolute;
@@ -321,7 +334,18 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         overflow: hidden; /* Oculta cualquier contenido que desborde */
         border-radius: 50%; 
     }
-    
+    * {
+        box-sizing: border-box;
+        overflow-x: hidden; 
+      }
+      
+      /* Centrar los elementos */
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     
 
     #botonEmpezar {
