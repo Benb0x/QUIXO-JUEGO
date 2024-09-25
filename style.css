@@ -174,8 +174,20 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
 @media screen and (max-width: 375px) {
     body{
-        padding-top: 20px ;
+        margin: 0;
+        padding: 0;
+        height: 100vh; /* Para que el body ocupe el 100% de la altura de la pantalla */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%; /* Para que el contenedor ocupe el 100% del body */
+      }
     h1{
         font-size: 66px; /* Ajusta el tamaño del texto en móviles */
         margin-left: 0 ;
@@ -261,7 +273,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     }
 }
 
-@media (min-width: 390px) and (max-width: 844px) {
+@media only screen and (min-width: 430px) and (max-width: 460px) {
     body {
         padding-top: 25px;
     }
