@@ -312,7 +312,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         top: 108%; /* Ajusta la posición vertical */
         left: 75%;
         transform: translate(-50%, -50%); /* Centra el círculo */
-        width: 150%; /* Ajusta el tamaño del círculo */
+        width: 125%; /* Ajusta el tamaño del círculo */
         height: auto; /* Mantén la proporción */
         margin: 0 -25%;
         display: flex;
@@ -332,6 +332,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         width: 80%; /* Ajusta el ancho del botón */
         padding: 15px; /* Aumenta el padding para pantallas grandes */
         font-size: 5vw; /* Ajusta el tamaño del texto del botón */
+        margin: 20px auto;
     }
 
     #estadoJuego {
@@ -341,6 +342,16 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         transform: translateX(-50%); /* Centra horizontalmente */
         font-size: 4vw; /* Ajusta el tamaño del texto */
         text-align: center;
+    }
+    #estadoJuego, #ronda {
+        margin-left: 0; /* Elimina el margen izquierdo */
+        text-align: center;
+        font-size: 5vw; /* Ajusta el tamaño del texto para que se vea mejor en móviles */
+        line-height: 1.5;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
+        top:80%;
+        white-space: normal;
     }
 }
 
