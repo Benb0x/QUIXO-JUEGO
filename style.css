@@ -212,7 +212,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         align-items: center;
     }
     .circulo {
-        width: 95%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
+        width: 75%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
         max-width: 300px;/* Aumenta el ancho del círculo para que desborde los bordes */
         height: 65vh; /* Mantiene la proporción original */
         margin: 0 auto; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
@@ -232,7 +232,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         height: auto;
     }
     #figura svg {
-        width: 65%; /* Ajusta el tamaño del SVG sin deformarlo */
+        width: 55%; /* Ajusta el tamaño del SVG sin deformarlo */
         height: auto; /* Mantiene la proporción original del SVG */
     }
     #botonEmpezar {
