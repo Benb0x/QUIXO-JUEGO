@@ -169,12 +169,14 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
 @media screen and (max-width: 375px) {
     body{
+        flex-direction: column;
         margin: 0;
         padding: 0;
         height: 100vh; /* Para que el body ocupe el 100% de la altura de la pantalla */
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
     }
     .container {
         display: flex;
@@ -237,8 +239,8 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         margin: 20px auto; /* Centra el botón y agrega un margen superior */
         width: 80%; /* Ajusta el ancho del botón */
         left: 50%;
-        top: 165%;
-        transform: translateX(-50%); /* Centra el botón horizontalmente */
+        top: 105%;
+        transform: translateX(-50%) translateY(0); /* Centra el botón horizontalmente */
          /* Aumenta el relleno para hacerlo más alto */
         background-color: #4682B4; /* Color del fondo del botón */
         color: white; /* Color del texto */
