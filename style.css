@@ -214,30 +214,7 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
         width: 120px; 
         align-items: center;
     }
-    .circulo {
-        width: 75%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
-        max-width: 300px;/* Aumenta el ancho del círculo para que desborde los bordes */
-        height: 65vh; /* Mantiene la proporción original */
-        margin: 0 auto; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden; /* Oculta cualquier contenido que desborde */
-        border-radius: 50%; 
-        position: relative;
-    }
-
-    #quixoLineas {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%; /* Asegura que el contenido esté centrado dentro del círculo */
-        height: auto;
-    }
-    #figura svg {
-        width: 55%; /* Ajusta el tamaño del SVG sin deformarlo */
-        height: auto; /* Mantiene la proporción original del SVG */
-    }
+    
     #botonEmpezar {
         margin: 20px auto; /* Centra el botón y agrega un margen superior */
         width: 80%; /* Ajusta el ancho del botón */
@@ -262,14 +239,40 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
     }
     
     #estadoJuego, #ronda {
-        margin-left: 0; /* Elimina el margen izquierdo */
+        margin: 20px 0; /* Elimina el margen izquierdo */
         text-align: center;
         font-size: 5vw; /* Ajusta el tamaño del texto para que se vea mejor en móviles */
         line-height: 1.5;
         left: 50%;
+        z-index: 2; 
         transform: translateX(-50%) translateY(-50%); /* Centra horizontalmente */
         top:80%;
         white-space: normal;
+    }
+    .circulo {
+        width: 75%; /* Reduce el tamaño del círculo en pantallas más pequeñas */
+        z-index: 1;
+        max-width: 300px;/* Aumenta el ancho del círculo para que desborde los bordes */
+        height: 65vh; /* Mantiene la proporción original */
+        margin: 0 auto; /* Centra el círculo horizontalmente y ajusta el desbordamiento */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Oculta cualquier contenido que desborde */
+        border-radius: 50%; 
+        position: relative;
+    }
+
+    #quixoLineas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Asegura que el contenido esté centrado dentro del círculo */
+        height: auto;
+    }
+    #figura svg {
+        width: 55%; /* Ajusta el tamaño del SVG sin deformarlo */
+        height: auto; /* Mantiene la proporción original del SVG */
     }
 }
 
