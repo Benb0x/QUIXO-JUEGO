@@ -169,21 +169,24 @@ transform: scale(0.90); /* Reduce ligeramente el tamaño del botón cuando se ha
 
 @media screen and (max-width: 375px) {
     body{
-        flex-direction: column;
         margin: 0;
         padding: 0;
-        height: 100vh; /* Para que el body ocupe el 100% de la altura de la pantalla */
+        height: auto; /* Cambiado de 100vh a auto para permitir que el contenido crezca */
+        min-height: 100vh;/* Para que el body ocupe el 100% de la altura de la pantalla */
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: flex-start; /* Alineamos los elementos hacia arriba para permitir desplazamiento */
         align-items: center;
-        overflow: hidden;
+        overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        overflow-y: auto;
     }
     .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100%; /* Para que el contenedor ocupe el 100% del body */
+        height: auto; /* Permite que el contenedor crezca si es necesario */
+        min-height: 100vh;/* Para que el contenedor ocupe el 100% del body */
       }
     h1{
         font-size: 66px; /* Ajusta el tamaño del texto en móviles */
